@@ -1,0 +1,18 @@
+version: '3.0'
+services:
+
+  redis-db:
+    image: "redis:alpine"
+    environment:
+      REDIS_REPLICATION_MODE: master
+    command: redis-server --requirepass sOmE_sEcUrE_pAsS
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/var/lib/redis
+      - redisconf:/usr/local/etc/redis/redis.conf
+
+
+# Names our volumes , TODO add one
+volumes:
+  redisdata:
