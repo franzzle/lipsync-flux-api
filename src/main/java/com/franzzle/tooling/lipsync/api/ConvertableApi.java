@@ -6,14 +6,16 @@ import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
-@Tag(name = "conversion", description = "File upload and management")
-public interface FileApi {
+import java.util.List;
+
+@Tag(name = "convertable", description = "File upload and management")
+public interface ConvertableApi {
     /**
      *
      * @param file
      * @return
      */
-    @Operation(summary = "Upload a .wav file", tags = {"conversion"})
+    @Operation(summary = "Upload a .wav file", tags = {"convertable"})
     @PostMapping
     Mono<Void> postFile(@RequestPart("file") Mono<FilePart> file);
 
@@ -21,7 +23,7 @@ public interface FileApi {
      *
      * @param uuid
      */
-    @Operation(summary = "Remove lipsync artifacts, wav and json", tags = {"conversion"})
+    @Operation(summary = "Remove lipsync artifacts, wav and json", tags = {"convertable"})
     @DeleteMapping(path = "/{uuid}")
     void deleteLipsyncArtifacts(@PathVariable String uuid);
 
@@ -30,6 +32,12 @@ public interface FileApi {
      * @param uuid
      * @return
      */
+    @Operation(summary = "Start the conversion", tags = {"convertable"})
     @PutMapping(path = "/{uuid}")
     Mono<Void> putConversion(@PathVariable String uuid);
+
+    @Operation(summary = "Get a list of convertables", tags = {"convertable"})
+    @GetMapping
+    Mono<Convertables> list();
+
 }
