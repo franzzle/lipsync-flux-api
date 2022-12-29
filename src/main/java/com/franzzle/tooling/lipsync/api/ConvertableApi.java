@@ -6,8 +6,6 @@ import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 @Tag(name = "convertable", description = "File upload and management")
 public interface ConvertableApi {
     /**

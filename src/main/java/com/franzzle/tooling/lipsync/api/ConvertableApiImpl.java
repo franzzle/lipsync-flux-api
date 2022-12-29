@@ -12,12 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 import java.io.File;
-import java.io.FilenameFilter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @RestController
 @RequestMapping("/conversion")
@@ -33,7 +28,9 @@ public class ConvertableApiImpl implements ConvertableApi {
     @Override
     public Mono<Void> postFile(Mono<FilePart>  filePartMono) {
         return filePartMono
+                .doFirst(() -> System.out.println(String.format("Conversion started")))
                 .doOnNext(filePart -> System.out.println(filePart.filename()))
+                .doFinally(signalType -> System.out.println(String.format("Conversion ended")))
                 .flatMap(filePart -> {
                     final String filename = getFileNameWithoutExtension(filePart.filename());
                     final String uuidResulting = isUUID(filename) ? getUuidFileNameFormatted(filename) : String.format("%s.wav", UUID.randomUUID());
@@ -45,20 +42,31 @@ public class ConvertableApiImpl implements ConvertableApi {
 
     @Override
     public void deleteLipsyncArtifacts(String uuid) {
-        System.out.println(uuid);
+        checkIfUuidIsGenuine(uuid);
+        checkIfFileExists(uuid);
+
+
     }
 
     @Override
     public Mono<Void> putConversion(String uuid) {
+        checkIfUuidIsGenuine(uuid);
+        checkIfFileExists(uuid);
+        return Mono.empty();
+    }
+
+    private static void checkIfUuidIsGenuine(String uuid) {
         if(!isUUID(uuid)){
             throw new UuidConversionException(String.format("%s is not a valid UUID and this conversion cannot start", uuid));
         }
+    }
+
+    private void checkIfFileExists(String uuid) {
         final String uuidFileNameFormatted = getUuidFileNameFormatted(uuid);
         final File wavFile = new File(storageDir, uuidFileNameFormatted);
         if(!wavFile.exists()){
             throw new ApiException(String.format("%s is not existent on the filesystem", uuidFileNameFormatted));
         }
-        return Mono.empty();
     }
 
     public static boolean isUUID(String input) {
@@ -72,9 +80,13 @@ public class ConvertableApiImpl implements ConvertableApi {
 
     @Override
     public Mono<Convertables> list() {
+        return Mono.just(getConvertables());
+    }
+
+    private Convertables getConvertables() {
         final List<String> filenames =
-                Arrays.stream(new File(storageDir)
-                                .list((dir, name) -> name.endsWith("wav")))
+                Arrays.stream(Objects.requireNonNull(new File(storageDir)
+                                .list((dir, name) -> name.endsWith("wav"))))
                                 .toList();
 
 
@@ -86,7 +98,7 @@ public class ConvertableApiImpl implements ConvertableApi {
             Convertable convertable = new Convertable(uuidFromFile);
             convertables.getConvertables().add(convertable);
         }
-        return Mono.just(convertables);
+        return convertables;
     }
 
 
