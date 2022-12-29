@@ -3,6 +3,7 @@ package com.franzzle.tooling.lipsync.api;
 import com.franzzle.tooling.lipsync.api.error.ApiException;
 import com.franzzle.tooling.lipsync.api.error.UuidConversionException;
 import com.franzzle.tooling.lipsync.api.service.RhubarbService;
+import com.franzzle.tooling.lipsync.api.validator.ValidUuid;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+import javax.validation.constraints.Size;
 import java.io.File;
 import java.util.*;
 
@@ -41,16 +43,16 @@ public class ConvertableApiImpl implements ConvertableApi {
 
 
     @Override
-    public void deleteLipsyncArtifacts(String uuid) {
-        checkIfUuidIsGenuine(uuid);
-        checkIfFileExists(uuid);
+    public void deleteLipsyncArtifacts(@ValidUuid @Size(min = 2, max = 10) String uuid) {
+//        checkIfUuidIsGenuine(uuid);
+//        checkIfFileExists(uuid);
 
 
     }
 
     @Override
-    public Mono<Void> putConversion(String uuid) {
-        checkIfUuidIsGenuine(uuid);
+    public Mono<Void> putConversion(@ValidUuid String uuid) {
+//        checkIfUuidIsGenuine(uuid);
         checkIfFileExists(uuid);
         return Mono.empty();
     }
