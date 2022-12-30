@@ -2,7 +2,6 @@ package com.franzzle.tooling.lipsync.api;
 
 import com.franzzle.tooling.lipsync.api.error.ApiException;
 import com.franzzle.tooling.lipsync.api.error.UuidConversionException;
-import com.franzzle.tooling.lipsync.api.service.ConversionStatusHolder;
 import com.franzzle.tooling.lipsync.api.service.LipsyncConversionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
