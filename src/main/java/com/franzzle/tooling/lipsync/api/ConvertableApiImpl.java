@@ -2,8 +2,8 @@ package com.franzzle.tooling.lipsync.api;
 
 import com.franzzle.tooling.lipsync.api.error.ApiException;
 import com.franzzle.tooling.lipsync.api.error.UuidConversionException;
-import com.franzzle.tooling.lipsync.api.service.ConversionService;
-import com.franzzle.tooling.lipsync.api.service.RhubarbService;
+import com.franzzle.tooling.lipsync.api.service.ConversionStatusHolder;
+import com.franzzle.tooling.lipsync.api.service.LipsyncConversionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,10 +22,9 @@ public class ConvertableApiImpl implements ConvertableApi {
     private String storageDir;
 
     @Autowired
-    private RhubarbService rhubarbService;
+    private LipsyncConversionService lipsyncConversionService;
 
-    @Autowired
-    private ConversionService conversionService;
+
 
     @Override
     public Mono<Void> postFile(Mono<FilePart>  filePartMono) {
@@ -44,7 +43,6 @@ public class ConvertableApiImpl implements ConvertableApi {
 
     @Override
     public void deleteLipsyncArtifacts(String uuid) {
-//        checkIfUuidIsGenuine(uuid);
 //        checkIfFileExists(uuid);
 //        conversionService.convert(uuid);
 
@@ -52,8 +50,10 @@ public class ConvertableApiImpl implements ConvertableApi {
 
     @Override
     public Mono<Void> putConversion(String uuid) {
-//        checkIfUuidIsGenuine(uuid);
         checkIfFileExists(uuid);
+
+        lipsyncConversionService.convert(uuid);
+
         return Mono.empty();
     }
 
