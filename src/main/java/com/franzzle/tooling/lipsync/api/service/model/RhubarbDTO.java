@@ -1,7 +1,7 @@
 package com.franzzle.tooling.lipsync.api.service.model;
 
 public class RhubarbDTO {
-    private String sourceInputFile;
+    private String sourceUuid;
     private String sourceInputPath;
 
     private String destFile;
@@ -9,12 +9,12 @@ public class RhubarbDTO {
 
     private String spokenTextHint;
 
-    public String getSourceInputFile() {
-        return sourceInputFile;
+    public String getSourceUuid() {
+        return sourceUuid;
     }
 
-    public void setSourceInputFile(String sourceInputFile) {
-        this.sourceInputFile = sourceInputFile;
+    public void setSourceUuid(String sourceInputFile) {
+        this.sourceUuid = sourceInputFile;
     }
 
     public String getSourceInputPath() {

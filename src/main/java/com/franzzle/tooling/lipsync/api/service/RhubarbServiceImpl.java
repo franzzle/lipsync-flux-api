@@ -32,7 +32,7 @@ public class RhubarbServiceImpl implements RhubarbService {
 
     @Override
     public Observable<String> waveTolipSync(RhubarbDTO rhubarbDTO) {
-        return getObservableForLipsyncProcess(rhubarbDTO.getSourceInputFile(),
+        return getObservableForLipsyncProcess(rhubarbDTO.getSourceUuid(),
                 rhubarbDTO.getSourceInputPath(),
                 rhubarbDTO.getDestPath(),
                 this.rhubarbDir,
@@ -46,7 +46,14 @@ public class RhubarbServiceImpl implements RhubarbService {
                                                               String optionalTextWavRepresents) {
         return Observable.create((ObservableEmitter<String> emitter) -> {
             final String uuidWavFile = String.format("%s.wav", uuid);
-            final File[] filesInSource = new File(sourceDir).listFiles();
+            final File sourceFileDir = new File(sourceDir);
+            if(sourceFileDir.isFile()){
+                throw new RuntimeException(String.format("Given sourcedir %s is a file and not a directory", sourceFileDir.getAbsolutePath()));
+            }
+
+            final File[] filesInSource = sourceFileDir.listFiles();
+
+
             boolean exists = Arrays.stream(filesInSource)
                     .anyMatch(file -> file.getName().contains(uuid));
 

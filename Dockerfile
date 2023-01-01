@@ -1,5 +1,5 @@
 FROM alpine:latest as packager
-MAINTAINER KPN
+MAINTAINER FRANZZLE
 
 RUN apk --no-cache add openjdk11-jdk openjdk11-jmods
 
