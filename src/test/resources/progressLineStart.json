@@ -1,0 +1,8 @@
+{
+  "type": "start",
+  "file": "/Users/franskramer/Development/GameToolDevelopment/lipsync-flux-api.api/build/resources/test/F83DF837-66B4-43CC-AD0A-677AE0AAB809.wav",
+  "log": {
+    "level": "Info",
+    "message": "Application startup. Input file: \"/Users/franskramer/Development/GameToolDevelopment/lipsync-flux-api.api/build/resources/test/F83DF837-66B4-43CC-AD0A-677AE0AAB809.wav\"."
+  }
+}

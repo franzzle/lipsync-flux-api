@@ -4,10 +4,12 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Sinks;
 
 @Component
-public class ConversionStatusHolder {
+public class SinkWrapper {
     private final Sinks.Many sink;
+    private final String uuid;
 
-    public ConversionStatusHolder() {
+    public SinkWrapper(String uuid) {
+        this.uuid = uuid;
         sink = Sinks.many().multicast().onBackpressureBuffer();
     }
 

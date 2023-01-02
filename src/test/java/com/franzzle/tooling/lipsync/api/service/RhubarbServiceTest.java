@@ -33,8 +33,6 @@ import static java.lang.ClassLoader.getSystemResource;
         }
 )
 public class RhubarbServiceTest {
-    public static final String UUID_WAV_TO_LIPSYNC = "1BEDD120-3098-45C5-A8C1-2A61247F380F";
-
     @Autowired
     private RhubarbService rhubarbService;
 
@@ -66,6 +64,7 @@ public class RhubarbServiceTest {
         final List<String> lastProgressLineOutput = new ArrayList<>();
         observableLipsyncProcess.subscribe(
                 progressStatusLine -> {
+                    System.out.println(progressStatusLine);
                     lastProgressLineOutput.add(progressStatusLine);
                 },
                 throwable -> Assertions.fail(throwable.getMessage()),
@@ -76,7 +75,7 @@ public class RhubarbServiceTest {
 
         Assertions.assertFalse(lastProgressLineOutput.isEmpty(), "Should contain at least some lines");
 
-        final File jsonFile = new File(rhubarbDTO.getDestPath(), String.format("%s.json", rhubarbDTO.getSourceUuid()));
+        final File jsonFile = new File(rhubarbDTO.getDestinationOuputPath(), String.format("%s.json", rhubarbDTO.getSourceUuid()));
         String lipsyncJson = new String(Files.readAllBytes(Paths.get(jsonFile.getAbsolutePath())));
 
         Assertions.assertNotNull(lipsyncJson, "Should at least return something!");
@@ -105,7 +104,7 @@ public class RhubarbServiceTest {
         final RhubarbDTO rhubarbDTO = new RhubarbDTO();
         rhubarbDTO.setSourceUuid("F83DF837-66B4-43CC-AD0A-677AE0AAB809");
         rhubarbDTO.setSourceInputPath(new File(getSystemResource(String.format("%s.wav", rhubarbDTO.getSourceUuid())).getFile()).getParent());
-        rhubarbDTO.setDestPath(new File(System.getProperty("java.io.tmpdir"), "destLipsyncSequences").getAbsolutePath());
+        rhubarbDTO.setDestinationOuputPath(new File(System.getProperty("java.io.tmpdir"), "destLipsyncSequences").getAbsolutePath());
         return rhubarbDTO;
     }
 }

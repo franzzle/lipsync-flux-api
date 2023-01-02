@@ -1,6 +1,7 @@
 package com.franzzle.tooling.lipsync.api;
 
-import com.franzzle.tooling.lipsync.api.service.ConversionStatusHolder;
+import com.franzzle.tooling.lipsync.api.service.LipsyncConversionService;
+import com.franzzle.tooling.lipsync.api.service.SinkWrapper;
 import com.franzzle.tooling.lipsync.api.service.RhubarbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,10 +16,11 @@ public class ConversionEventsController {
     private RhubarbService rhubarbService;
 
     @Autowired
-    private ConversionStatusHolder conversionStatusHolder;
+    private LipsyncConversionService lipsyncConversionService;
 
     @GetMapping(value = "/conversion/{uuid}/events", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> getEventsAsTheyHappen(@PathVariable String uuid) {
-        return conversionStatusHolder.getSink().asFlux();
+        final SinkWrapper sink = lipsyncConversionService.getSink(uuid);
+        return sink.getSink().asFlux();
     }
 }

@@ -4,8 +4,7 @@ public class RhubarbDTO {
     private String sourceUuid;
     private String sourceInputPath;
 
-    private String destFile;
-    private String destPath;
+    private String destinationOuputPath;
 
     private String spokenTextHint;
 
@@ -25,20 +24,12 @@ public class RhubarbDTO {
         this.sourceInputPath = sourceInputPath;
     }
 
-    public String getDestFile() {
-        return destFile;
+    public String getDestinationOuputPath() {
+        return destinationOuputPath;
     }
 
-    public void setDestFile(String destFile) {
-        this.destFile = destFile;
-    }
-
-    public String getDestPath() {
-        return destPath;
-    }
-
-    public void setDestPath(String destPath) {
-        this.destPath = destPath;
+    public void setDestinationOuputPath(String destinationOuputPath) {
+        this.destinationOuputPath = destinationOuputPath;
     }
 
     public String getSpokenTextHint() {

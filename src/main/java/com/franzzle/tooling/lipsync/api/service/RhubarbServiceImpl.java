@@ -34,7 +34,7 @@ public class RhubarbServiceImpl implements RhubarbService {
     public Observable<String> waveTolipSync(RhubarbDTO rhubarbDTO) {
         return getObservableForLipsyncProcess(rhubarbDTO.getSourceUuid(),
                 rhubarbDTO.getSourceInputPath(),
-                rhubarbDTO.getDestPath(),
+                rhubarbDTO.getDestinationOuputPath(),
                 this.rhubarbDir,
                 rhubarbDTO.getSpokenTextHint());
     }

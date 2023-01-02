@@ -1,0 +1,7 @@
+{
+  "type": "success",
+  "log": {
+    "level": "Info",
+    "message": "Application terminating normally."
+  }
+}

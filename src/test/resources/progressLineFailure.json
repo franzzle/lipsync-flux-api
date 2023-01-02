@@ -1,0 +1,8 @@
+{
+  "type": "failure",
+  "reason": "Error processing file \"no-such-file.wav\".\nCould not open sound file \"no-such-file.wav\".\nNo such file or directory",
+  "log": {
+    "level": "Fatal",
+    "message": "Application terminating with error: Error processing file \"no-such-file.wav\".\nCould not open sound file \"no-such-file.wav\".\nNo such file or directory"
+  }
+}
