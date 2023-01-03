@@ -10,6 +10,8 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = ValidUuidConstraintValidator.class)
 public @interface ValidUuid {
     String message() default "Uuid is not properly formatted";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

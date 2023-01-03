@@ -10,8 +10,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableOpenApi
 public class LipsyncApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(LipsyncApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(LipsyncApiApplication.class, args);
+    }
 
 }

@@ -8,7 +8,7 @@ import com.franzzle.tooling.lipsync.api.Convertables;
 public class ConvertableListConverter extends StdConverter<Convertables, String> {
 
     @Override
-    public String convert(Convertables convertables)  {
+    public String convert(Convertables convertables) {
         try {
             return new ObjectMapper().writeValueAsString(convertables);
         } catch (JsonProcessingException e) {

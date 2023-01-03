@@ -16,6 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.concurrent.CountDownLatch;
 
 @Component
 public class RhubarbServiceImpl implements RhubarbService {
@@ -47,7 +48,7 @@ public class RhubarbServiceImpl implements RhubarbService {
         return Observable.create((ObservableEmitter<String> emitter) -> {
             final String uuidWavFile = String.format("%s.wav", uuid);
             final File sourceFileDir = new File(sourceDir);
-            if(sourceFileDir.isFile()){
+            if (sourceFileDir.isFile()) {
                 throw new RuntimeException(String.format("Given sourcedir %s is a file and not a directory", sourceFileDir.getAbsolutePath()));
             }
 
@@ -57,12 +58,12 @@ public class RhubarbServiceImpl implements RhubarbService {
             boolean exists = Arrays.stream(filesInSource)
                     .anyMatch(file -> file.getName().contains(uuid));
 
-            if(exists){
+            if (exists) {
                 final File temporaryWavfileForUuid = new File(sourceDir, uuidWavFile);
                 CommandLine cmdLine = new CommandLine(rhubarbToolDir + "/rhubarb");
 
                 final File jsonDestinationDir = new File(destDir);
-                if(!jsonDestinationDir.exists()){
+                if (!jsonDestinationDir.exists()) {
                     jsonDestinationDir.mkdirs();
                 }
 
@@ -87,34 +88,37 @@ public class RhubarbServiceImpl implements RhubarbService {
                 cmdLine.setSubstitutionMap(substitionMapToBuild);
 
                 final DefaultExecutor executor = new DefaultExecutor();
+
                 final ExecuteWatchdog watchdog = new ExecuteWatchdog(FOUR_MINUTES);
                 executor.setWatchdog(watchdog);
 
-                try (PipedOutputStream processOutputStream = new PipedOutputStream();
-                     final PipedInputStream pipedInputStream = new PipedInputStream(processOutputStream)) {
-                    PumpStreamHandler streamHandler = new PumpStreamHandler(processOutputStream);
-                    executor.setStreamHandler(streamHandler);
-
-                    try {
-                        new Thread(() -> {
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(pipedInputStream));
-                            try {
-                                for (String line; (line = reader.readLine()) != null; ) {
-                                    emitter.onNext(line);
-                                }
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
+                final PipedOutputStream processOutputStream = new PipedOutputStream();
+                final PipedInputStream pipedInputStream = new PipedInputStream(processOutputStream);
+                final PumpStreamHandler streamHandler = new PumpStreamHandler(processOutputStream);
+                executor.setStreamHandler(streamHandler);
+                CountDownLatch latch = new CountDownLatch(1);
+                try {
+                    new Thread(() -> {
+                        try (final InputStreamReader in = new InputStreamReader(pipedInputStream);
+                             final BufferedReader reader = new BufferedReader(in)) {
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                emitter.onNext(line);
                             }
-                        }).start();
+                            latch.countDown();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).start();
 
-                        executor.execute(cmdLine);
-
-                    } catch (ExecuteException e) {
-                        emitter.onError(e);
-                        return;
-                    }
-                    emitter.onComplete();
+                    executor.execute(cmdLine);
+                } catch (ExecuteException e) {
+                    emitter.onError(e);
+                    return;
                 }
+                latch.await();
+                processOutputStream.close();
+                emitter.onComplete();
             }
         });
     }

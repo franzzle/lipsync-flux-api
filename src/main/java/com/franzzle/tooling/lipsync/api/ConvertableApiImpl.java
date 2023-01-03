@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.io.File;
 import java.util.*;
@@ -24,7 +26,7 @@ public class ConvertableApiImpl implements ConvertableApi {
     private LipsyncConversionService lipsyncConversionService;
 
     @Override
-    public Mono<Void> postFile(Mono<FilePart>  filePartMono) {
+    public Mono<Void> postFile(Mono<FilePart> filePartMono) {
         return filePartMono
                 .doFirst(() -> System.out.println(String.format("Conversion started")))
                 .doOnNext(filePart -> System.out.println(filePart.filename()))
@@ -37,7 +39,6 @@ public class ConvertableApiImpl implements ConvertableApi {
     }
 
 
-
     @Override
     public void deleteLipsyncArtifacts(String uuid) {
 //        checkIfFileExists(uuid);
@@ -46,16 +47,16 @@ public class ConvertableApiImpl implements ConvertableApi {
     }
 
     @Override
-    public Mono<Void> putConversion(String uuid) {
+    public Disposable putConversion(String uuid) {
         checkIfFileExists(uuid);
 
-        lipsyncConversionService.convert(uuid);
-
-        return Mono.empty();
+        return Mono.fromCallable(() -> lipsyncConversionService.convert(uuid))
+                .publishOn(Schedulers.elastic())
+                .subscribe();
     }
 
     private static void checkIfUuidIsGenuine(String uuid) {
-        if(!isUUID(uuid)){
+        if (!isUUID(uuid)) {
             throw new UuidConversionException(String.format("%s is not a valid UUID and this conversion cannot start", uuid));
         }
     }
@@ -63,7 +64,7 @@ public class ConvertableApiImpl implements ConvertableApi {
     private void checkIfFileExists(String uuid) {
         final String uuidFileNameFormatted = getUuidFileNameFormatted(uuid);
         final File wavFile = new File(storageDir, uuidFileNameFormatted);
-        if(!wavFile.exists()){
+        if (!wavFile.exists()) {
             throw new ApiException(String.format("%s is not existent on the filesystem", uuidFileNameFormatted));
         }
     }
@@ -86,7 +87,7 @@ public class ConvertableApiImpl implements ConvertableApi {
         final List<String> filenames =
                 Arrays.stream(Objects.requireNonNull(new File(storageDir)
                                 .list((dir, name) -> name.endsWith("wav"))))
-                                .toList();
+                        .toList();
 
 
         final Convertables convertables = new Convertables();

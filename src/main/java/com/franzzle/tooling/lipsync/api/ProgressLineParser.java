@@ -5,9 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.franzzle.tooling.lipsync.api.service.model.ProgressLine;
 import org.springframework.stereotype.Component;
 
+//TODO parse ProgressType
 @Component
 public class ProgressLineParser {
-    ProgressLine parse(String jsonLineContent){
+    public ProgressLine parse(String jsonLineContent) {
         final ObjectMapper objectMapper = new ObjectMapper();
         try {
             final ProgressLine progressLine = objectMapper.readValue(jsonLineContent, ProgressLine.class);

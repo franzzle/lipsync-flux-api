@@ -26,7 +26,7 @@ public class ProgressLine {
     private String reason;
 
     /**
-     *
+     * Log that can provide extended info
      */
     private ProgressLog log;
 

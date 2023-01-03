@@ -1,8 +1,8 @@
 package com.franzzle.tooling.lipsync.api;
 
 import com.franzzle.tooling.lipsync.api.service.LipsyncConversionService;
-import com.franzzle.tooling.lipsync.api.service.SinkWrapper;
 import com.franzzle.tooling.lipsync.api.service.RhubarbService;
+import com.franzzle.tooling.lipsync.api.service.SinkWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

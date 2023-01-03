@@ -20,12 +20,12 @@ public class SwaggerDocumentationConfig {
                 .licenseUrl("http://unlicense.org")
                 .termsOfServiceUrl("")
                 .version("v1")
-                .contact(new Contact("","", "lipsync@franzzle.com"))
+                .contact(new Contact("", "", "lipsync@franzzle.com"))
                 .build();
     }
 
     @Bean
-    public Docket customImplementation(){
+    public Docket customImplementation() {
         return new Docket(DocumentationType.OAS_30)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.franzzle.tooling.lipsync.api"))
