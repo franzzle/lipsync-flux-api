@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
@@ -19,7 +18,7 @@ public interface ConvertableApi {
      */
     @Operation(summary = "Upload a .wav file", tags = {"convertable"})
     @PostMapping
-    Mono<Void> postFile(@RequestPart("file") Mono<FilePart> file);
+    Mono<Convertable> postFile(@RequestPart("file") Mono<FilePart> file);
 
     /**
      * @param uuid
@@ -34,7 +33,7 @@ public interface ConvertableApi {
      */
     @Operation(summary = "Start the conversion", tags = {"convertable"})
     @PutMapping(path = "/{uuid}")
-    Disposable putConversion(@Valid @ValidUuid @PathVariable String uuid);
+    Convertable putConversion(@Valid @ValidUuid @PathVariable String uuid);
 
     @Operation(summary = "Get a list of convertables", tags = {"convertable"})
     @GetMapping

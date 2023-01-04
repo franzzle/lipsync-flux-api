@@ -12,15 +12,23 @@ import reactor.core.publisher.Flux;
 
 @RestController
 public class ConversionEventsController {
+
+
     @Autowired
     private RhubarbService rhubarbService;
 
     @Autowired
     private LipsyncConversionService lipsyncConversionService;
 
+    @Autowired
+    private SinkWrapperRegistry sinkWrapperRegistry;
+
     @GetMapping(value = "/conversion/{uuid}/events", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> getEventsAsTheyHappen(@PathVariable String uuid) {
-        final SinkWrapper sink = lipsyncConversionService.getSink(uuid);
+        //TODO Throw Mono error 404 if nothing found
+        System.out.println(String.format("Calling eventcontroller for %s", uuid));
+
+        final SinkWrapper sink = sinkWrapperRegistry.getSink(uuid);
         return sink.getSink().asFlux();
     }
 }

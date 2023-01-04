@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
@@ -25,17 +24,19 @@ public class ConvertableApiImpl implements ConvertableApi {
     @Autowired
     private LipsyncConversionService lipsyncConversionService;
 
+    @Autowired
+    private SinkWrapperRegistry sinkWrapperRegistry;
+
     @Override
-    public Mono<Void> postFile(Mono<FilePart> filePartMono) {
+    public Mono<Convertable> postFile(Mono<FilePart> filePartMono) {
+        final String uuid = UUID.randomUUID().toString().toUpperCase();
+        final File dest = new File(storageDir, String.format("%s.wav", uuid));
         return filePartMono
                 .doFirst(() -> System.out.println(String.format("Conversion started")))
                 .doOnNext(filePart -> System.out.println(filePart.filename()))
                 .doFinally(signalType -> System.out.println(String.format("Conversion ended")))
-                .flatMap(filePart -> {
-                    final String filename = getFileNameWithoutExtension(filePart.filename());
-                    final String uuidResulting = isUUID(filename) ? getUuidFileNameFormatted(filename) : String.format("%s.wav", UUID.randomUUID());
-                    return filePart.transferTo(new File(storageDir, uuidResulting));
-                }).then();
+                .flatMap(filePart -> filePart.transferTo(dest))
+                .thenReturn(new Convertable(uuid));
     }
 
 
@@ -46,13 +47,17 @@ public class ConvertableApiImpl implements ConvertableApi {
 
     }
 
-    @Override
-    public Disposable putConversion(String uuid) {
-        checkIfFileExists(uuid);
 
-        return Mono.fromCallable(() -> lipsyncConversionService.convert(uuid))
+    @Override
+    public Convertable putConversion(String uuid) {
+        checkIfFileExists(uuid);
+        sinkWrapperRegistry.addSink(uuid);
+
+        Mono.fromCallable(() -> lipsyncConversionService.convert(uuid))
                 .publishOn(Schedulers.elastic())
                 .subscribe();
+
+        return new Convertable(uuid);
     }
 
     private static void checkIfUuidIsGenuine(String uuid) {
