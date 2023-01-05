@@ -1,0 +1,25 @@
+body {
+    font-family: Arial;
+}
+
+.threeColumn {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 4px;
+    border: 1px solid black;
+    width: 60%;
+}
+
+.twoColumnLayout {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /*grid-gap: 8px;*/
+    /*border: 1px solid black;*/
+    width: 60%;
+}
+
+.item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

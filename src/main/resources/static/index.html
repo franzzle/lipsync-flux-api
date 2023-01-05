@@ -3,73 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>Lipsync App</title>
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script src="conversion-api.js" ></script>
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-<p>Lipsync App</p>
+
+
+
+<h1>Lipsync App</h1>
 
 <input type="file" id="file-input" accept=".wav">
 
+<div class="twoColumnLayout">
+    <div class="item">
+        <label for="lipsyncConversionProgress">Conversion progress:</label>
+    </div>
+    <div class="item">
+        <progress id="lipsyncConversionProgress" value="0"></progress>
+    </div>
+</div>
+<br>
+<br>
+
+
+<div class="threeColumn">
+        <div class="item">
+            <a href="/converted/089AEBB1-A222-41E4-8AEC-5A7993EA41F9.wav">Download WAV</a>
+        </div>
+        <div class="item">
+            <a href="/converted/089AEBB1-A222-41E4-8AEC-5A7993EA41F9.json">Download Lipsync</a>
+        </div>
+        <div class="item">
+            <button class="mdc-button mdc-button--raised mdc-theme--primary-bg">Remove</button>
+        </div>
+        <div class="item">
+            <a href="/converted/089AEBB1-A222-41E4-8AEC-5A7993EA41F9.wav">Download WAV</a>
+        </div>
+        <div class="item">
+            <a href="/converted/089AEBB1-A222-41E4-8AEC-5A7993EA41F9.json">Download Lipsync</a>
+        </div>
+        <div class="item">
+            <button class="mdc-button mdc-button--raised mdc-theme--primary-bg">Remove</button>
+        </div>
+</div>
+<br>
+<div class="twoColumnLayout">
+    <div class="item">
+        <img src="openapi.png">
+    </div>
+    <div class="item">
+        <a href="/swagger-ui/index.html">Open API</a>
+    </div>
+</div>
+
+
 <script>
-const fileInput = document.getElementById('file-input');
-
-const endpoint = '/conversion';
-
-// POST request to send .wav file to conversion endpoint
-async function sendWavFile(wavFile) {
-    const formData = new FormData();
-    formData.append('file', wavFile);
-
-    const response = await fetch(endpoint, {
-        method: 'POST',
-        body: formData
+    const fileInput = document.getElementById('file-input');
+    fileInput.addEventListener('change', async () => {
+        const file = fileInput.files[0];
+        const uuid = await sendWavFile(file);
+        await updateConversion(uuid);
+        listenForEvents(uuid);
     });
-
-    const json = await response.json();
-    return json.uuid;
-}
-
-// PUT request to update conversion with uuid
-async function updateConversion(uuid) {
-    const response = await fetch(`${endpoint}/${uuid}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-            status: 'processing'
-        }),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-}
-
-// GET request to listen for server-sent events
-async function listenForEvents(uuid) {
-    const eventSource = new EventSource(`${endpoint}/${uuid}/events`);
-
-    eventSource.onmessage = function(event) {
-        console.log(event.data);
-        const progress = event.data;
-        const lipsyncConversionProgressBar = document.getElementById('lipsyncConversionProgress');
-        lipsyncConversionProgressBar.value = progress;
-        if (progress >= 1) {
-            eventSource.close();
-        }
-    };
-}
-
-fileInput.addEventListener('change', async () => {
-    const file = fileInput.files[0];
-    const uuid = await sendWavFile(file);
-    await updateConversion(uuid);
-    listenForEvents(uuid);
-});
-
 </script>
 
-<br>
-<label for="lipsyncConversionProgress">Conversion progress:</label>
-    <progress id="lipsyncConversionProgress" value="0"></progress>
-</label>
-<br>
-<a href="/swagger-ui/index.html">Open API</a>
 </body>
 </html>
