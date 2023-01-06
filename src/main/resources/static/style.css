@@ -29,3 +29,8 @@ body {
     justify-content: left;
     align-items: center;
 }
+
+.browse-button {
+    --mdc-theme-primary: #6200ee;
+    --mdc-theme-on-primary: white;
+}

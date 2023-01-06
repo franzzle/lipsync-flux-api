@@ -2,16 +2,27 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Lipsync App</title>
+    <title>Lipsync Conversion App</title>
     <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-    <script src="conversion-api.js" ></script>
+    <script src="conversion-api.js"></script>
+    <script src="converted-api.js"></script>
     <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
 
-
+<script>
+    window.addEventListener('load', function() {
+        const fileInput = document.getElementById('file-input');
+        fileInput.addEventListener('change', async () => {
+            const file = fileInput.files[0];
+            const uuid = await sendWavFile(file);
+            await updateConversion(uuid);
+            listenForEvents(uuid);
+        });
+    });
+</script>
 
 <h1>Lipsync App</h1>
 
@@ -28,26 +39,26 @@
 <br>
 <br>
 
-
-<div class="threeColumn">
-        <div class="item">
-            <a href="/converted/089AEBB1-A222-41E4-8AEC-5A7993EA41F9.wav">Download WAV</a>
-        </div>
-        <div class="item">
-            <a href="/converted/089AEBB1-A222-41E4-8AEC-5A7993EA41F9.json">Download Lipsync</a>
-        </div>
-        <div class="item">
-            <button class="mdc-button mdc-button--raised mdc-theme--primary-bg">Remove</button>
-        </div>
-        <div class="item">
-            <a href="/converted/089AEBB1-A222-41E4-8AEC-5A7993EA41F9.wav">Download WAV</a>
-        </div>
-        <div class="item">
-            <a href="/converted/089AEBB1-A222-41E4-8AEC-5A7993EA41F9.json">Download Lipsync</a>
-        </div>
-        <div class="item">
-            <button class="mdc-button mdc-button--raised mdc-theme--primary-bg">Remove</button>
-        </div>
+<button onclick="updateResults()" class="mdc-button mdc-button raised mdc-theme primary-bg">Refresh</button>
+<div id="conversionResults" class="threeColumn">
+<!--    <div class="item">-->
+<!--        <a href="/converted/089AEBB1-A222-41E4-8AEC-5A7993EA41F9.wav">Download WAV</a>-->
+<!--    </div>-->
+<!--    <div class="item">-->
+<!--        <a href="/converted/089AEBB1-A222-41E4-8AEC-5A7993EA41F9.json">Download Lipsync</a>-->
+<!--    </div>-->
+<!--    <div class="item">-->
+<!--        <button class="mdc-button mdc-button&#45;&#45;raised mdc-theme&#45;&#45;primary-bg">Remove</button>-->
+<!--    </div>-->
+<!--    <div class="item">-->
+<!--        <a href="/converted/089AEBB1-A222-41E4-8AEC-5A7993EA41F9.wav">Download WAV</a>-->
+<!--    </div>-->
+<!--    <div class="item">-->
+<!--        <a href="/converted/089AEBB1-A222-41E4-8AEC-5A7993EA41F9.json">Download Lipsync</a>-->
+<!--    </div>-->
+<!--    <div class="item">-->
+<!--        <button class="mdc-button mdc-button&#45;&#45;raised mdc-theme&#45;&#45;primary-bg">Remove</button>-->
+<!--    </div>-->
 </div>
 <br>
 <div class="twoColumnLayout">
@@ -58,17 +69,6 @@
         <a href="/swagger-ui/index.html">Open API</a>
     </div>
 </div>
-
-
-<script>
-    const fileInput = document.getElementById('file-input');
-    fileInput.addEventListener('change', async () => {
-        const file = fileInput.files[0];
-        const uuid = await sendWavFile(file);
-        await updateConversion(uuid);
-        listenForEvents(uuid);
-    });
-</script>
 
 </body>
 </html>
