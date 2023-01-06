@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
 @RestController
-public class ConversionEventsController {
-
-
+public class ConversionEventsApiImpl implements ConversionEventsApi {
     @Autowired
     private RhubarbService rhubarbService;
 
@@ -23,8 +21,8 @@ public class ConversionEventsController {
     @Autowired
     private SinkWrapperRegistry sinkWrapperRegistry;
 
-    @GetMapping(value = "/conversion/{uuid}/events", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<String> getEventsAsTheyHappen(@PathVariable String uuid) {
+
+    public Flux<String> getEventsAsTheyHappen(String uuid) {
         //TODO Throw Mono error 404 if nothing found
         System.out.println(String.format("Calling eventcontroller for %s", uuid));
 

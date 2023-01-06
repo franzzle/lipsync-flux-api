@@ -1,4 +1,4 @@
-package com.franzzle.tooling.lipsync.api;
+package com.franzzle.tooling.lipsync.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

@@ -2,6 +2,8 @@ package com.franzzle.tooling.lipsync.api;
 
 import com.franzzle.tooling.lipsync.api.error.ApiException;
 import com.franzzle.tooling.lipsync.api.error.UuidConversionException;
+import com.franzzle.tooling.lipsync.api.model.Convertable;
+import com.franzzle.tooling.lipsync.api.model.Convertables;
 import com.franzzle.tooling.lipsync.api.service.LipsyncConversionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,12 @@ public class ConvertableApiImpl implements ConvertableApi {
     private LipsyncConversionService lipsyncConversionService;
 
     @Autowired
+    private FileUtilities fileUtilities;
+
+    @Autowired
     private SinkWrapperRegistry sinkWrapperRegistry;
+
+
 
     @Override
     public Mono<Convertable> postFile(Mono<FilePart> filePartMono) {
@@ -99,22 +106,11 @@ public class ConvertableApiImpl implements ConvertableApi {
         convertables.setConvertables(new ArrayList<>());
 
         for (String uuidFileName : filenames) {
-            final String uuidFromFile = getFileNameWithoutExtension(uuidFileName);
+            final String uuidFromFile = fileUtilities.getFileNameWithoutExtension(uuidFileName);
             Convertable convertable = new Convertable(uuidFromFile);
             convertables.getConvertables().add(convertable);
         }
         return convertables;
-    }
-
-
-    public static String getFileNameWithoutExtension(String filePath) {
-        File file = new File(filePath);
-        String fileName = file.getName();
-        int index = fileName.lastIndexOf('.');
-        if (index > 0) {
-            fileName = fileName.substring(0, index);
-        }
-        return fileName;
     }
 
     private static String getUuidFileNameFormatted(String filename) {

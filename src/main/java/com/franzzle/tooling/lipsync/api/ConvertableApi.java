@@ -1,5 +1,7 @@
 package com.franzzle.tooling.lipsync.api;
 
+import com.franzzle.tooling.lipsync.api.model.Convertable;
+import com.franzzle.tooling.lipsync.api.model.Convertables;
 import com.franzzle.tooling.lipsync.api.validator.ValidUuid;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

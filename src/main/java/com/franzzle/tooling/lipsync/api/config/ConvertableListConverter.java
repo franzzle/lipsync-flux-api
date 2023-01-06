@@ -3,7 +3,7 @@ package com.franzzle.tooling.lipsync.api.config;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.StdConverter;
-import com.franzzle.tooling.lipsync.api.Convertables;
+import com.franzzle.tooling.lipsync.api.model.Convertables;
 
 public class ConvertableListConverter extends StdConverter<Convertables, String> {
 

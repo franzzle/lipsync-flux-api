@@ -50,11 +50,11 @@ public class LipsyncConversionServiceImpl implements LipsyncConversionService {
                 },
                 throwable -> {
                     sinkWrapperRegistry.getSink(uuid).getSink().emitError(throwable, (signalType, emitResult) -> true);
-//                    sinkWrapperRegistry.removeSink(uuid);
+                    sinkWrapperRegistry.removeSink(uuid);
                 },
                 () -> {
                     sinkWrapperRegistry.getSink(uuid).getSink().emitComplete((signalType, emitResult) -> false);
-//                    sinkWrapperRegistry.removeSink(uuid);
+                    sinkWrapperRegistry.removeSink(uuid);
                 });
 
         return null;
