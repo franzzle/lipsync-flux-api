@@ -1,8 +1,8 @@
 package com.franzzle.tooling.lipsync.api.service;
 
+import com.franzzle.tooling.lipsync.api.FileUtilities;
 import com.franzzle.tooling.lipsync.api.model.Convertable;
 import com.franzzle.tooling.lipsync.api.model.Convertables;
-import com.franzzle.tooling.lipsync.api.FileUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
