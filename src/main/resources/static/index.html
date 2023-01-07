@@ -15,6 +15,7 @@
 <script>
     window.addEventListener('load', function() {
         const fileInput = document.getElementById('file-input');
+
         fileInput.addEventListener('change', async () => {
             const file = fileInput.files[0];
             const uuid = await sendWavFile(file);
@@ -26,7 +27,13 @@
 
 <h1>Lipsync App</h1>
 
-<input type="file" id="file-input" accept=".wav">
+<div class="mdc-form-field">
+    <div class="mdc-text-field file-input-field">
+        <input type="file" id="file-input" accept=".wav" class="mdc-text-field__input">
+        <div class="mdc-line-ripple"></div>
+    </div>
+    <p class="mdc-text-field-helper-text">Only .wav files are accepted</p>
+</div>
 
 <div class="twoColumnLayout">
     <div class="item_left">
@@ -39,26 +46,9 @@
 <br>
 <br>
 
-<button onclick="updateResults()" class="mdc-button mdc-button raised mdc-theme primary-bg">Refresh</button>
+<button onclick="updateResults()" class="mdc-button mdc-button--raised mdc-theme primary-bg">Refresh</button>
 <div id="conversionResults" class="threeColumn">
-<!--    <div class="item">-->
-<!--        <a href="/converted/089AEBB1-A222-41E4-8AEC-5A7993EA41F9.wav">Download WAV</a>-->
-<!--    </div>-->
-<!--    <div class="item">-->
-<!--        <a href="/converted/089AEBB1-A222-41E4-8AEC-5A7993EA41F9.json">Download Lipsync</a>-->
-<!--    </div>-->
-<!--    <div class="item">-->
-<!--        <button class="mdc-button mdc-button&#45;&#45;raised mdc-theme&#45;&#45;primary-bg">Remove</button>-->
-<!--    </div>-->
-<!--    <div class="item">-->
-<!--        <a href="/converted/089AEBB1-A222-41E4-8AEC-5A7993EA41F9.wav">Download WAV</a>-->
-<!--    </div>-->
-<!--    <div class="item">-->
-<!--        <a href="/converted/089AEBB1-A222-41E4-8AEC-5A7993EA41F9.json">Download Lipsync</a>-->
-<!--    </div>-->
-<!--    <div class="item">-->
-<!--        <button class="mdc-button mdc-button&#45;&#45;raised mdc-theme&#45;&#45;primary-bg">Remove</button>-->
-<!--    </div>-->
+<!-- DOM will be manipulated to show divs with results -->
 </div>
 <br>
 <div class="twoColumnLayout">

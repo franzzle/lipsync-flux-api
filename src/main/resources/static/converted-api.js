@@ -17,7 +17,7 @@ async function updateResults() {
         divLipsync.className = 'item';
 
         const anchorLipSync = document.createElement('a');
-        anchorLipSync.href = `/converted/${uuid}.json`;
+        anchorLipSync.href = `/converted/lipsync/${uuid}.json`;
         anchorLipSync.innerHTML = 'Download Lipsync file';
 
         divLipsync.appendChild(anchorLipSync);
@@ -43,7 +43,7 @@ async function updateResults() {
         divButtonRemove.className = 'item';
 
         const buttonRemove = document.createElement('button');
-        buttonRemove.className = 'mdc-button mdc-button raised mdc-theme primary-bg'
+        buttonRemove.className = 'mdc-button mdc-button--raised mdc-theme primary-bg'
         buttonRemove.innerHTML = 'Remove';
         divButtonRemove.appendChild(buttonRemove);
 

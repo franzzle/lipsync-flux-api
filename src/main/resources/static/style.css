@@ -30,7 +30,6 @@ body {
     align-items: center;
 }
 
-.browse-button {
+.file-input-field {
     --mdc-theme-primary: #6200ee;
-    --mdc-theme-on-primary: white;
 }
