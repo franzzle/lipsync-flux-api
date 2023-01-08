@@ -11,6 +11,7 @@ async function getUuids() {
 async function updateResults() {
     const uuids = await getUuids();
     const container = document.getElementById('conversionResults');
+    container.innerHTML = '';
 
     function addLipsyncDiv(uuid) {
         const divLipsync = document.createElement('div');

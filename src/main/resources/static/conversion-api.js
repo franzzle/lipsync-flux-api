@@ -36,9 +36,11 @@ async function listenForEvents(uuid) {
         console.log(event.data);
         const progress = event.data;
         const lipsyncConversionProgressBar = document.getElementById('lipsyncConversionProgress');
-        lipsyncConversionProgressBar.value = progress;
+        var linearProgress = mdc.linearProgress.MDCLinearProgress.attachTo(lipsyncConversionProgressBar);
+        linearProgress.progress = progress;
         if (progress >= 1) {
             eventSource.close();
+            updateResults();
         }
     };
 }

@@ -2,19 +2,29 @@ body {
     font-family: Arial;
 }
 
+
+
 .threeColumn {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 4px;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     width: 60%;
 }
 
 .twoColumnLayout {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    grid-gap: 8px;
+    /*border: 1px solid black;*/
+    width: 60%;
+}
+
+.oneColumnLayout {
+    display: grid;
+    grid-template-columns: repeat(1, 2fr);
     /*grid-gap: 8px;*/
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     width: 60%;
 }
 
@@ -30,6 +40,57 @@ body {
     align-items: center;
 }
 
+.item_right {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
 .file-input-field {
     --mdc-theme-primary: #6200ee;
 }
+
+/* CSS */
+.mdc-linear-progress {
+    background-color: #e0e0e0;
+    height: 30px; /* adjust this value to change the thickness of the progress bar */
+    width: 100%;
+}
+
+.mdc-linear-progress__buffering-dots {
+    /* The buffering dots are created using CSS and are not part of the DOM. */
+}
+
+.mdc-linear-progress__buffer {
+    background-color: #e0e0e0;
+    height: 100%;
+}
+
+.mdc-linear-progress__bar {
+    background-color: #3f51b5;
+    height: 100%;
+}
+
+.mdc-linear-progress__bar-inner {
+    height: 100%;
+}
+
+.my-divider {
+    width: 60%; /* adjust this value to change the width of the divider */
+}
+
+/* CSS */
+.mdc-list-item__graphic {
+    color: #3f51b5; /* adjust this value to change the color of the anchor */
+    text-decoration: none; /* remove the underline from the anchor */
+}
+
+.mdc-list-item__graphic:hover {
+    color: #303f9f; /* adjust this value to change the color of the anchor when hovered */
+}
+
+:root {
+    --mdc-theme-primary: #4d5a31; /* adjust this value to change the primary color */
+    --mdc-theme-secondary: #93d502; /* adjust this value to change the secondary color */
+}
+
