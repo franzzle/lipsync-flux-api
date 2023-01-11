@@ -30,8 +30,8 @@ async function updateResults() {
         divWav.className = 'item';
 
         const anchorWav = document.createElement('a');
-        anchorWav.href = `/converted/${uuid}.wav`;
-        anchorWav.innerHTML = 'Download Lipsync file';
+        anchorWav.href = `/converted/wav/${uuid}.wav`;
+        anchorWav.innerHTML = 'Download WAV file';
         divWav.appendChild(anchorWav);
         return divWav;
     }

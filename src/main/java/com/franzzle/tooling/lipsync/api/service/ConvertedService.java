@@ -6,7 +6,10 @@ import org.springframework.core.io.Resource;
 public interface ConvertedService {
     Convertables listConverted();
 
-    Resource getResourceForUuid(String uuid);
+    Resource getResultingLipsyncOutput(String uuid);
 
+    Resource getResultingWavInput(String uuid);
+
+    void deleteResourcesForUuid(String uuid);
 
 }

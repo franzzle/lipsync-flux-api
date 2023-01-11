@@ -20,7 +20,6 @@ import java.util.concurrent.CountDownLatch;
 
 @Component
 public class RhubarbServiceImpl implements RhubarbService {
-
     public static final int FOUR_MINUTES = 4 * 60 * 1000;
     public static final String TEMPORARY_WAVFILE_FOR_UUID = "temporaryWavfileForUuid";
     public static final String TEMPORARY_TEXT_FILE_REPRESENTING_WAV = "temporaryTextFileRepresentingWav";

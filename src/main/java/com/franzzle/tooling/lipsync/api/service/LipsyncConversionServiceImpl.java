@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.io.File;
-
 @Service
 @Validated
 public class LipsyncConversionServiceImpl implements LipsyncConversionService {
@@ -25,15 +23,19 @@ public class LipsyncConversionServiceImpl implements LipsyncConversionService {
     @Autowired
     private SinkWrapperRegistry sinkWrapperRegistry;
 
-    @Value("${wav.storage.dir:/wavStorageDir}")
-    private String storageDir;
+    @Value("${wav.storage.dir:#{systemProperties['java.io.tmpdir']}/wavStorageDir}")
+    private String wavInputDir;
+
+    @Value("${lipsync.storage.dir:#{systemProperties['java.io.tmpdir']}/jsonStorageDir}")
+    private String jsonOutputDir;
+
 
     @Override
     public Void convert(@ValidUuid String uuid) {
         final RhubarbDTO rhubarbDTO = new RhubarbDTO();
         rhubarbDTO.setSourceUuid(uuid);
-        rhubarbDTO.setSourceInputPath(storageDir);
-        rhubarbDTO.setDestinationOuputPath(new File(storageDir, "destLipsync").getAbsolutePath());
+        rhubarbDTO.setSourceInputPath(wavInputDir);
+        rhubarbDTO.setDestinationOuputPath(jsonOutputDir);
 
         final Observable<String> rhubarbService = this.rhubarbService.waveTolipSync(rhubarbDTO);
         rhubarbService.subscribe(
@@ -60,11 +62,4 @@ public class LipsyncConversionServiceImpl implements LipsyncConversionService {
         return null;
     }
 
-//    @Override
-//    public SinkWrapper getSink(String uuid) {
-//        if (sinkWrapperRegistry.containsKey(uuid)) {
-//            return sinkWrapperRegistry.get(uuid);
-//        }
-//        throw new RuntimeException(String.format("Sink for %s is not found in registry", uuid));
-//    }
 }

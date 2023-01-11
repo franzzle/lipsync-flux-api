@@ -25,3 +25,13 @@ docker build --no-cache -t  franzzle/lipsync-flux-api .
 ```
 docker-compose up lipsync
 ```
+
+## Improvements
+
+ * Finish OpenAPI Error situations including implementation
+ * Fix security issues (while still keeping it basic)
+ * Add SFL4J logging
+ * Improve test coverage of code
+ * Docker should run with a specific user, not root
+ * MDC Web Styling is very basic and could be improved with paging and layout is poor 
+ * Improve documentation

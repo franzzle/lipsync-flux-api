@@ -6,6 +6,7 @@ services:
     image: "franzzle/lipsync-flux-api"
     environment:
       WAV_STORAGE_DIR: /output/lipsyncwavs
+      JSON_STORAGE_DIR: /output/lipsyncjsons
       APP_RHUBARB_DIR: /rhubarb/Rhubarb-Lip-Sync-1.13.0-Linux
     ports:
       - "9180:9180"

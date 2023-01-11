@@ -8,6 +8,7 @@ import com.franzzle.tooling.lipsync.api.service.LipsyncConversionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
@@ -20,8 +21,11 @@ import java.util.*;
 @Tag(name = "conversion", description = "conversion to lipsync wav")
 public class ConvertableApiImpl implements ConvertableApi {
 
-    @Value("${wav.storage.dir:/wavStorageDir}")
+    @Value("${wav.storage.dir:#{systemProperties['java.io.tmpdir']}/wavStorageDir}")
     private String storageDir;
+
+    @Autowired
+    private Environment environment;
 
     @Autowired
     private LipsyncConversionService lipsyncConversionService;
@@ -37,13 +41,27 @@ public class ConvertableApiImpl implements ConvertableApi {
     @Override
     public Mono<Convertable> postFile(Mono<FilePart> filePartMono) {
         final String uuid = UUID.randomUUID().toString().toUpperCase();
-        final File dest = new File(storageDir, String.format("%s.wav", uuid));
+
+        final File wavStorageDir = getWavStorageDir();
+
+        final File dest = new File(wavStorageDir, String.format("%s.wav", uuid));
         return filePartMono
                 .doFirst(() -> System.out.println(String.format("Conversion started")))
                 .doOnNext(filePart -> System.out.println(filePart.filename()))
                 .doFinally(signalType -> System.out.println(String.format("Conversion ended")))
                 .flatMap(filePart -> filePart.transferTo(dest))
                 .thenReturn(new Convertable(uuid));
+    }
+
+    private File getWavStorageDir() {
+        final File wavStorageDir = new File(storageDir);
+        if(!environment.containsProperty("wav.storage.dir")){
+            if(!wavStorageDir.exists()) {
+                wavStorageDir.mkdirs();
+            }
+            System.out.println(String.format("Setting default DIR : %s", storageDir));
+        }
+        return wavStorageDir;
     }
 
 
@@ -96,11 +114,17 @@ public class ConvertableApiImpl implements ConvertableApi {
     }
 
     private Convertables getConvertables() {
+        final File wavStorageDir = new File(storageDir);
+        if(!wavStorageDir.exists()){
+            final Convertables convertables = new Convertables();
+            convertables.setConvertables(new ArrayList<>());
+            return convertables;
+        }
+
         final List<String> filenames =
-                Arrays.stream(Objects.requireNonNull(new File(storageDir)
+                Arrays.stream(Objects.requireNonNull(wavStorageDir
                                 .list((dir, name) -> name.endsWith("wav"))))
                         .toList();
-
 
         final Convertables convertables = new Convertables();
         convertables.setConvertables(new ArrayList<>());
