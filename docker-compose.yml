@@ -11,7 +11,7 @@ services:
     ports:
       - "9180:9180"
     volumes:
-      - lipsyncwavs:/output/lipsyncwavs
+      - lipsyncwavs:/output
 
 # Names our volumes , TODO add one
 volumes:

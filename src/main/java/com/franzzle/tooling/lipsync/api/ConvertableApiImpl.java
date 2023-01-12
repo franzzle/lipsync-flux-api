@@ -56,10 +56,10 @@ public class ConvertableApiImpl implements ConvertableApi {
     private File getWavStorageDir() {
         final File wavStorageDir = new File(storageDir);
         if(!environment.containsProperty("wav.storage.dir")){
-            if(!wavStorageDir.exists()) {
-                wavStorageDir.mkdirs();
-            }
             System.out.println(String.format("Setting default DIR : %s", storageDir));
+        }
+        if(!wavStorageDir.exists()) {
+            wavStorageDir.mkdirs();
         }
         return wavStorageDir;
     }
