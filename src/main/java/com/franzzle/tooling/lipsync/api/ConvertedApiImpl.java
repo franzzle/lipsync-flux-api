@@ -15,6 +15,9 @@ public class ConvertedApiImpl implements ConvertedApi{
     @Autowired
     private ConvertedService convertedService;
 
+    @Autowired
+    private FileUtilities fileUtilities;
+
     @Override
     public Mono<Convertables> listConverted() {
         return Mono.just(convertedService.listConverted());
@@ -31,8 +34,8 @@ public class ConvertedApiImpl implements ConvertedApi{
     }
 
     @Override
-    public void delete(String uuidFilename) {
-
+    public void delete(String uuid) {
+        convertedService.deleteResourcesForUuid(uuid);
     }
 
     private ResponseEntity<Resource> getResourceLipsyncResponseEntity(String uuidFilename) {

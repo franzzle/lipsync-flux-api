@@ -8,6 +8,16 @@ async function getUuids() {
     }
 }
 
+async function deleteConverted(uuid) {
+    try {
+        await fetch(`/converted/${uuid}`, {
+            method: 'DELETE'
+        }).then(() => updateResults())
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function updateResults() {
     const uuids = await getUuids();
     const container = document.getElementById('conversionResults');
@@ -46,6 +56,8 @@ async function updateResults() {
         const buttonRemove = document.createElement('button');
         buttonRemove.className = 'mdc-button mdc-button--raised mdc-theme primary-bg'
         buttonRemove.innerHTML = 'Remove';
+        buttonRemove.addEventListener("click",()=>deleteConverted(uuid));
+
         divButtonRemove.appendChild(buttonRemove);
 
         container.appendChild(divLipsync);

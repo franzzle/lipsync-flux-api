@@ -28,7 +28,7 @@ public interface ConvertedApi {
     ResponseEntity<Resource> downloadWavsyncFile(@PathVariable String uuidFilename);
 
     @Operation(summary = "Remove WAV and json File", tags = {"converted"})
-    @DeleteMapping(path = "/{uuidFilename:.+}")
-    void delete(@PathVariable String uuidFilename);
+    @DeleteMapping(path = "/{uuid}")
+    void delete(@PathVariable String uuid);
 
 }

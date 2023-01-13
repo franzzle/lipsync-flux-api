@@ -84,7 +84,7 @@ public class ConvertedServiceImpl implements ConvertedService {
 
     @Override
     public void deleteResourcesForUuid(String uuid) {
-        final File jsonFile = new File(new File(jsonOutputDir), uuid);
+        final File jsonFile = new File(new File(jsonOutputDir), String.format("%s.json", uuid));
         if(jsonFile.exists()){
             jsonFile.delete();
         }
