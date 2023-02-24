@@ -16,6 +16,7 @@ import reactor.core.scheduler.Schedulers;
 
 import java.io.File;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @Tag(name = "conversion", description = "conversion to lipsync wav")
@@ -123,8 +124,7 @@ public class ConvertableApiImpl implements ConvertableApi {
 
         final List<String> filenames =
                 Arrays.stream(Objects.requireNonNull(wavStorageDir
-                                .list((dir, name) -> name.endsWith("wav"))))
-                        .toList();
+                                .list((dir, name) -> name.endsWith("wav")))).collect(Collectors.toList());
 
         final Convertables convertables = new Convertables();
         convertables.setConvertables(new ArrayList<>());

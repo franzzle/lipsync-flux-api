@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Component
 public class ConvertedServiceImpl implements ConvertedService {
@@ -46,7 +47,8 @@ public class ConvertedServiceImpl implements ConvertedService {
         final List<String> filenames =
                 Arrays.stream(Objects.requireNonNull(jsonStorageDir
                                 .list((dir, name) -> name.endsWith("json"))))
-                        .toList();
+                        .collect(Collectors.toList());
+
 
         final Convertables convertables = new Convertables();
         convertables.setConvertables(new ArrayList<>());
