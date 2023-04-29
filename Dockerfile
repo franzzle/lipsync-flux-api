@@ -4,7 +4,7 @@ MAINTAINER FRANZZLE
 RUN apt-get update && \
     apt-get install -y openjdk-17-jdk
 
-RUN apt-get update && apt-get install -y wget unzip
+RUN apt-get install -y wget unzip
 
 RUN wget https://github.com/DanielSWolf/rhubarb-lip-sync/releases/download/v1.13.0/Rhubarb-Lip-Sync-1.13.0-Linux.zip -O /tmp/rhubarb.zip && \
     unzip /tmp/rhubarb.zip -d /rhubarb

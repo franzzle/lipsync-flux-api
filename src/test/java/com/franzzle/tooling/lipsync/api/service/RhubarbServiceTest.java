@@ -2,10 +2,7 @@ package com.franzzle.tooling.lipsync.api.service;
 
 import com.franzzle.tooling.lipsync.api.service.model.RhubarbDTO;
 import io.reactivex.Observable;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +21,12 @@ import java.util.List;
 import static java.lang.ClassLoader.getSystemResource;
 
 //TODO Output to temp location and cleanup after that
-//@Disabled
+@Disabled
 @SpringJUnitConfig
 @ContextConfiguration(classes = RhubarbServiceTest.ContextConfiguration.class)
 @TestPropertySource(properties =
         {
-                "app.rhubarb.dir=/Users/franskramer/Development/Tooling/rhubarb-lip-sync-1.10.0-osx"
+                "app.rhubarb.dir=/Users/franzzle/Development/Tooling/rhubarb-lip-sync-1.10.0-osx"
         }
 )
 public class RhubarbServiceTest {

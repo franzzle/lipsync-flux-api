@@ -15,7 +15,8 @@ This will show a very basic but useable frontend to upload WAV files and convert
 Create a docker with this command :
 
 ```
-export JAVA_HOME=~/Library/Java/JavaVirtualMachines/temurin-17.0.1/Contents/Home 
+export JAVA_HOME=~/Library/Java/JavaVirtualMachines/temurin-17.0.7/Contents/Home 
+export JAVA_HOME=~/Library/Java/JavaVirtualMachines/azul-17.0.6/Contents/Home 
 ./gradlew clean build
 docker build --no-cache -t  franzzle/lipsync-flux-api .
 ```
