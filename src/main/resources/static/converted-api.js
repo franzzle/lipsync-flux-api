@@ -35,16 +35,57 @@ async function updateResults() {
         return divLipsync;
     }
 
-    function addWavDiv(uuid) {
-        const divWav = document.createElement('div');
-        divWav.className = 'item';
+function addWavDiv(uuid) {
+    const divWav = document.createElement('div');
+    divWav.className = 'item';
 
-        const anchorWav = document.createElement('a');
-        anchorWav.href = `/converted/wav/${uuid}.wav`;
-        anchorWav.innerHTML = 'Download WAV file';
-        divWav.appendChild(anchorWav);
-        return divWav;
-    }
+    const anchorWav = document.createElement('a');
+    anchorWav.href = `/converted/wav/${uuid}.wav`;
+    anchorWav.innerHTML = 'Download WAV file';
+
+    // Create audio element for WAV playback
+    const audioElement = document.createElement('audio');
+    audioElement.src = `/converted/wav/${uuid}.wav`;
+    audioElement.id = `audio-${uuid}`;
+    audioElement.style.display = 'none'; // Hide it initially
+
+    // Create play button to control audio element
+    const playButton = document.createElement('button');
+    const playSvg = `
+                       <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                           <polygon points="2.5,1.5 2.5,8.5 8.5,5.0" fill="black" />
+                       </svg>
+                   `;
+    const pauseSvg = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                          <rect x="2" y="1" width="2" height="7" fill="black"/>
+                          <rect x="6" y="1" width="2" height="7" fill="black"/>
+                        </svg>
+                   `;
+
+    playButton.innerHTML = playSvg;
+    playButton.className = 'play-button';
+    playButton.onclick = function() {
+        const audio = document.getElementById(`audio-${uuid}`);
+        if (audio.paused) {
+            audio.play();
+            playButton.innerHTML = pauseSvg;
+        } else {
+            audio.pause();
+            playButton.innerHTML = playSvg;
+        }
+    };
+
+    divWav.appendChild(anchorWav);
+    divWav.appendChild(playButton);
+    divWav.appendChild(audioElement);
+
+    return divWav;
+}
+
+
+
+
 
     for (const uuid of uuids) {
         const divLipsync = addLipsyncDiv(uuid);

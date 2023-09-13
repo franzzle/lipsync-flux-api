@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
+
 @RestController
 public class ConversionEventsApiImpl implements ConversionEventsApi {
     @Autowired
@@ -20,9 +21,6 @@ public class ConversionEventsApiImpl implements ConversionEventsApi {
 
 
     public Flux<String> getEventsAsTheyHappen(String uuid) {
-        //TODO Throw Mono error 404 if nothing found
-        System.out.println(String.format("Calling eventcontroller for %s", uuid));
-
         final SinkWrapper sink = sinkWrapperRegistry.getSink(uuid);
         return sink.getSink().asFlux();
     }
