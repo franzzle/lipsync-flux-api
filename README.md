@@ -27,6 +27,31 @@ docker build --no-cache -t  franzzle/lipsync-flux-api:0.0.1 .
 docker-compose up lipsync
 ```
 
+Dependencies 
+
+## Whisper Docker
+When using the transcribing of audio it is easiest to use the Docker release of Whisper.
+Whisper is A locally run tool that you can use to convert your audio into text. 
+Very handy if you want to copy/paste this text through pipeline.
+
+```
+docker run -d -p 9000:9000 -e ASR_MODEL=base onerahmet/openai-whisper-asr-webservice:latest
+```
+
+Set the url to the whisper service (supporting Open API) and it will work (with WAV's)
+
+```
+speech.recognition.api.url=http://localhost:9000/asr
+```
+
+Open API Docs for whisper 
+
+```
+http://localhost:9000/docs
+```
+
+
+
 ## Improvements
 
  * Finish OpenAPI Error situations including implementation

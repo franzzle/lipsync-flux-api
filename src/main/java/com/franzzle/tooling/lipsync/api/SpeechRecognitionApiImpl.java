@@ -23,14 +23,12 @@ public class SpeechRecognitionApiImpl {
     @PostMapping("/transcribe")
     public ResponseEntity<String> transcribeAudio(@RequestParam("uuid") String uuid) {
         try {
-            // Use the UUID to retrieve the JSON result as a Resource
             Resource audioResource = convertedService.getResultingWavInput(String.format("%s.wav", uuid));
 
             MultipartBodyBuilder bodyBuilder = new MultipartBodyBuilder();
             bodyBuilder.part("audio_file", audioResource)
                     .header("Content-Type", "audio/x-wav");
 
-            // Set up the RestTemplate
             RestTemplate restTemplate = new RestTemplate();
 
             // Make a POST request to the external API
