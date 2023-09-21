@@ -2,14 +2,12 @@ body {
     font-family: Arial;
 }
 
-
-
 .threeColumn {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 4px;
     /*border: 1px solid black;*/
-    width: 60%;
+    width: 80%;
 }
 
 .twoColumnLayout {

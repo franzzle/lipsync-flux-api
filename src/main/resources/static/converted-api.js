@@ -38,6 +38,8 @@ async function updateResults() {
 function addWavDiv(uuid) {
     const divWav = document.createElement('div');
     divWav.className = 'item';
+    divWav.style.display = 'block'; // Set display property to block
+    divWav.style.width = '100%';    // Set width to 100%
 
     const anchorWav = document.createElement('a');
     anchorWav.href = `/converted/wav/${uuid}.wav`;
@@ -76,12 +78,29 @@ function addWavDiv(uuid) {
         }
     };
 
+    // Create a button element to copy UUID to clipboard
+    const copyButton = document.createElement('button');
+    copyButton.innerHTML = 'Copy UUID';
+    copyButton.onclick = function() {
+        // Create a temporary input element to copy text to clipboard
+        const tempInput = document.createElement('input');
+        tempInput.value = uuid;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+    };
+
+    // Append the elements in the desired order: anchorWav, playButton, audioElement, copyButton
     divWav.appendChild(anchorWav);
     divWav.appendChild(playButton);
     divWav.appendChild(audioElement);
+    divWav.appendChild(copyButton);
 
     return divWav;
 }
+
+
 
 
 
