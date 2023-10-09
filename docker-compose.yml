@@ -1,7 +1,5 @@
 version: '3.0'
 services:
-
-
   lipsync:
     image: "franzzle/lipsync-flux-api_m1"
     environment:
@@ -14,6 +12,13 @@ services:
       - "5180:5180"
     volumes:
       - lipsyncwavs:/output
+
+  whisper_asr:
+    image: "onerahmet/openai-whisper-asr-webservice:latest"
+    environment:
+      ASR_MODEL: base
+    ports:
+      - "9000:9000"
 
 # Names our volumes , TODO add one
 volumes:
