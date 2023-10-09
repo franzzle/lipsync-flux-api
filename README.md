@@ -17,7 +17,7 @@ And convert them into Rhubarb's lipsync json as a result.
 
 ![webinterface.png](images%2Fwebinterface.png)
 
-## Docker image
+## Docker image for x64 (Intel based computers)
 
 Create a docker with this command :
 
@@ -27,6 +27,18 @@ export JAVA_HOME=~/Library/Java/JavaVirtualMachines/azul-17.0.6/Contents/Home
 ./gradlew clean build
 docker build --no-cache -t  franzzle/lipsync-flux-api:0.0.1 .
 ```
+
+## Docker image for arm64 (Arm based machines like Apple silicon, Chromebooks and Thinkpads)
+
+```
+docker buildx create --use
+docker buildx build --platform linux/arm64 --output=type=local,dest=./out -f DockerfileM1 -t lipsync-flux-api-arm:0.0.1 .
+docker buildx build --platform linux/arm64 --load -t lipsync-flux-api-arm:0.0.1 -f DockerfileM1 .
+```
+
+At the moment it does not work because these libs are not present :
+qemu-x86_64: Could not open '/lib64/ld-linux-x86-64.so.2': No such file or directory
+
 
 ## Docker compose run
 
