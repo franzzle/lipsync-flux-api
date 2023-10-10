@@ -1,98 +1,98 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>Lipsync Conversion App</title>
-    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
-    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-    <script src="conversion-api.js"></script>
-    <script src="converted-api.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Include Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 </head>
 <body>
 
-<script>
-    window.addEventListener('load', function () {
-        const fileInput = document.getElementById('file-input');
+<div id="contents">
+    <template>
+        <div>
+            <input type="file" @change="uploadFile"/>
+            <button @click="submitFile">Upload</button>
+        </div>
+    </template>
+</div>
 
-        fileInput.addEventListener('change', async () => {
-            const file = fileInput.files[0];
-            const uuid = await sendWavFile(file);
-            await updateConversion(uuid);
-            listenForEvents(uuid);
-        });
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+<script type="text/babel">
+    // player-card is now a Vue component that generates a 'card' showing a player
+    // It can be used
+    // declaratively like <player-card v-bind:player="someplayer">
+    Vue.component('player-card', {
+        props: ['player'],
+        template: `<div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            {{ player.name }}
+                        </h6>
+                        <p class="card-text">
+                            <div>
+                            {{ player.description }}
+                            </div>
+                        </p>
+                    </div>
+                </div>`
     });
+
+    var app = new Vue({
+        el: '#contents',
+        data: {
+            players: [
+                {id: "1", name: "Lionel Messi", description: "Argentina's superstar"},
+                {id: "2", name: "Christiano Ronaldo", description: "Portugal top-ranked player"}
+            ]
+        }
+    });
+
 </script>
 
-<h1>Lipsync App</h1>`
+<script>
+export default {
+  data() {
+    return {
+      selectedFile: null
+    };
+  },
+  methods: {
+    uploadFile(event) {
+      this.selectedFile = event.target.files[0];
+    },
+    async submitFile() {
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
 
-<form id="fileInputForm">
-    <div class="twoColumnLayout">
-        <div class="item_left mdc-form-field">
-            <div class="mdc-text-field file-input-field">
-                <input type="file" id="file-input" accept=".wav" class="mdc-text-field__input">
-                <div class="mdc-line-ripple"></div>
-            </div>
-            <p class="mdc-text-field-helper-text">Only .wav files are accepted</p>
-        </div>
-        <div class="item_right">
-            <button onclick="document.getElementById('fileInputForm').reset()"
-                    class="my-button mdc-button mdc-button--raised mdc-theme secundary-bg ">Reset
-            </button>
-        </div>
-    </div>
-</form>
+      try {
+        const response = await fetch("/conversion", {
+          method: 'POST',
+          body: formData
+        });
 
-<hr class="mdc-list-divider mdc-list-divider--inset">
+        if (response.ok) {
+          console.log('File uploaded successfully.');
+        } else {
+          console.log('File upload failed.');
+        }
+      } catch (error) {
+        console.log('An error occurred:', error);
+      }
+    }
+  }
+};
+</script>
 
-<div class="twoColumnLayout">
-    <div class="item_right">
-        <label for="lipsyncConversionProgress">Conversion progress : </label>
-    </div>
-    <div class="item_left">
-        <!--        <progress id="lipsyncConversionProgress" value="0"></progress>-->
-        <!-- HTML -->
-        <div id="lipsyncConversionProgress" class="mdc-linear-progress"
-             role="progressbar"
-             aria-valuenow="0"
-             aria-valuemax="100">
-            <div class="mdc-linear-progress__buffering-dots"></div>
-            <div class="mdc-linear-progress__buffer"></div>
-            <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
-                <span class="mdc-linear-progress__bar-inner"></span>
-            </div>
-            <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
-                <span class="mdc-linear-progress__bar-inner"></span>
-            </div>
-        </div>
-    </div>
-</div>
-<br>
-<br>
-<br>
-
-
-<div id="conversionResults" class="threeColumn">
-    <!-- DOM will be manipulated to show divs with results -->
-</div>
-<div class="twoColumnLayout">
-    <div class="item_left">
-    </div>
-    <div class="item_right">
-        <button onclick="updateResults()" class="mdc-button mdc-button--raised mdc-theme primary-bg my-button">Reload</button>
-    </div>
-</div>
-
-<br>
-<div class="twoColumnLayout">
-    <div class="item_right">
-        <img src="openapi.png">
-    </div>
-    <div class="item_left">
-        <a class="mdc-list-item__graphic" href="/swagger-ui/index.html">Open API</a>
-    </div>
-</div>
-<br>
 </body>
 </html>
