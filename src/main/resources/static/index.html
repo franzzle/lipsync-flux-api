@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <title>Lipsync Conversion App</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Include Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -14,85 +12,26 @@
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 </head>
 <body>
-
-<div id="contents">
-    <template>
-        <div>
-            <input type="file" @change="uploadFile"/>
-            <button @click="submitFile">Upload</button>
-        </div>
-    </template>
-</div>
-
-
-
+<!-- Moved the script includes up, so Vue is defined when you need it -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
-<script type="text/babel">
-    // player-card is now a Vue component that generates a 'card' showing a player
-    // It can be used
-    // declaratively like <player-card v-bind:player="someplayer">
-    Vue.component('player-card', {
-        props: ['player'],
-        template: `<div class="card">
-                    <div class="card-body">
-                        <h6 class="card-title">
-                            {{ player.name }}
-                        </h6>
-                        <p class="card-text">
-                            <div>
-                            {{ player.description }}
-                            </div>
-                        </p>
-                    </div>
-                </div>`
-    });
 
-    var app = new Vue({
-        el: '#contents',
-        data: {
-            players: [
-                {id: "1", name: "Lionel Messi", description: "Argentina's superstar"},
-                {id: "2", name: "Christiano Ronaldo", description: "Portugal top-ranked player"}
-            ]
-        }
-    });
+<!-- Changed id to 'app' to match Vue instance -->
+<div id="app">
+    <file-uploader></file-uploader>
+</div>
 
-</script>
+<!-- Include your custom component -->
+<script src="./FileUploader.js"></script>
 
+<!-- Initialize Vue instance -->
 <script>
-export default {
-  data() {
-    return {
-      selectedFile: null
-    };
-  },
-  methods: {
-    uploadFile(event) {
-      this.selectedFile = event.target.files[0];
-    },
-    async submitFile() {
-      const formData = new FormData();
-      formData.append('file', this.selectedFile);
-
-      try {
-        const response = await fetch("/conversion", {
-          method: 'POST',
-          body: formData
+        new Vue({
+            el: '#app',
+            components: {
+              'file-uploader': FileUploader
+            }
         });
-
-        if (response.ok) {
-          console.log('File uploaded successfully.');
-        } else {
-          console.log('File upload failed.');
-        }
-      } catch (error) {
-        console.log('An error occurred:', error);
-      }
-    }
-  }
-};
-</script>
-
+    </script>
 </body>
 </html>

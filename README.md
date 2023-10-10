@@ -32,8 +32,7 @@ docker build --no-cache -t  franzzle/lipsync-flux-api:0.0.1 .
 
 ```
 docker buildx create --use
-docker buildx build --platform linux/arm64 --output=type=local,dest=./out -f DockerfileM1 -t lipsync-flux-api-arm:0.0.1 .
-docker buildx build --platform linux/arm64 --load -t lipsync-flux-api-arm:0.0.1 -f DockerfileM1 .
+docker buildx build --platform linux/arm64 --load -t lipsync-flux-api:0.0.2 .
 ```
 
 At the moment it does not work because these libs are not present :

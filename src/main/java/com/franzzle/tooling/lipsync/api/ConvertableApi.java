@@ -12,20 +12,20 @@ import reactor.core.publisher.Mono;
 import javax.validation.Valid;
 
 @RequestMapping("/conversion")
-@Tag(name = "convertable", description = "File upload and management")
+@Tag(name = "conversion", description = "File upload and management")
 public interface ConvertableApi {
     /**
      * @param file
      * @return
      */
-    @Operation(summary = "Upload a .wav file", tags = {"convertable"})
+    @Operation(summary = "Upload a .wav file", tags = {"conversion"})
     @PostMapping
     Mono<Convertable> postFile(@RequestPart("file") Mono<FilePart> file);
 
     /**
      * @param uuid
      */
-    @Operation(summary = "Remove lipsync artifacts, wav and json", tags = {"convertable"})
+    @Operation(summary = "Remove lipsync artifacts, wav and json", tags = {"conversion"})
     @DeleteMapping(path = "/{uuid}")
     void deleteLipsyncArtifacts(@Valid @ValidUuid @PathVariable String uuid);
 
@@ -33,11 +33,11 @@ public interface ConvertableApi {
      * @param uuid
      * @return
      */
-    @Operation(summary = "Start the conversion", tags = {"convertable"})
+    @Operation(summary = "Start the conversion", tags = {"conversion"})
     @PutMapping(path = "/{uuid}")
     Convertable putConversion(@Valid @ValidUuid @PathVariable String uuid);
 
-    @Operation(summary = "Get a list of convertables", tags = {"convertable"})
+    @Operation(summary = "Get a list of items ready for conversion", tags = {"conversion"})
     @GetMapping
     Mono<Convertables> list();
 
