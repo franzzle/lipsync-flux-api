@@ -18,7 +18,7 @@
 
 <!-- Changed id to 'app' to match Vue instance -->
 <div id="app">
-    <file-uploader></file-uploader>
+    <file-uploader @file-uploaded="onFileUploaded"></file-uploader>
 </div>
 
 <!-- Include your custom component -->
@@ -30,6 +30,13 @@
             el: '#app',
             components: {
               'file-uploader': FileUploader
+            },
+            methods: {
+                onFileUploaded(eventData) {
+                    // Do whatever you want when the file is uploaded.
+                    console.log("File uploaded!", eventData);
+                    // For example, notify other parts of your app, update the UI, etc.
+                }
             }
         });
     </script>

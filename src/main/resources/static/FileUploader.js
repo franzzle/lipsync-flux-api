@@ -25,13 +25,15 @@ const FileUploader = {
                 });
 
                 if (response.ok) {
+                    const data = await response.json();  // Parse the JSON response
                     console.log('File uploaded successfully.');
+                    this.$emit('file-uploaded', { success: true, uuid: data.uuid });  // Use data.uuid instead of response.data.uuid
                 } else {
                     console.log('File upload failed.');
                 }
             } catch (error) {
                 console.log('An error occurred:', error);
             }
-                    }
+        }
   },
 };
