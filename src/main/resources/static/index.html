@@ -10,6 +10,8 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
 <!-- Moved the script includes up, so Vue is defined when you need it -->
@@ -17,19 +19,27 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
 
 <!-- Changed id to 'app' to match Vue instance -->
+
 <div id="app">
-    <file-uploader @file-uploaded="onFileUploaded"></file-uploader>
+    <div class="container-wrapper">
+        <file-uploader @file-uploaded="onFileUploaded"></file-uploader>
+    </div>
+    <div>
+        <conversion-list></conversion-list>
+    </div>
 </div>
 
 <!-- Include your custom component -->
 <script src="./FileUploader.js"></script>
+<script src="./ConversionList.js"></script>
 
 <!-- Initialize Vue instance -->
 <script>
         new Vue({
             el: '#app',
             components: {
-              'file-uploader': FileUploader
+              'file-uploader': FileUploader,
+              'conversion-list' : ConversionList
             },
             methods: {
                 onFileUploaded(eventData) {

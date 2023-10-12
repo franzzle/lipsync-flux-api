@@ -1,9 +1,11 @@
 const FileUploader = {
   template: `
-    <div>
-      <input type="file" @change="uploadFile">
-      <button @click="submitFile">Upload</button>
-    </div>
+        <div class="input-group">
+          <input type="file" class="form-control" @change="uploadFile">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" @click="submitFile">Upload</button>
+          </span>
+        </div>
   `,
   data() {
     return {
