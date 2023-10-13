@@ -1,16 +1,22 @@
 const FileUploader = {
   template: `
-        <div class="input-group">
-          <input type="file" class="form-control" @change="uploadFile">
-          <span class="input-group-btn">
-            <button class="btn btn-primary" @click="submitFile">Upload</button>
-          </span>
+        <div :style="fileInput">
+            <div class="input-group">
+              <input type="file" class="form-control" @change="uploadFile">
+              <span class="input-group-btn">
+                <button class="btn btn-primary" @click="submitFile">Upload</button>
+              </span>
+            </div>
         </div>
   `,
   data() {
     return {
       selectedFile: null,
-    };
+        fileInput: {
+            margin: '20px'
+        }
+    }
+
   },
   methods: {
         uploadFile(event) {

@@ -2,3 +2,7 @@
     max-width: 1024px;
     margin: 0 auto;
 }
+
+.mb-4 {
+    margin-bottom: 2rem; /* Adjust the value as needed */
+}
