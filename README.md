@@ -25,8 +25,18 @@ Create a docker with this command :
 export JAVA_HOME=~/Library/Java/JavaVirtualMachines/temurin-17.0.7/Contents/Home 
 export JAVA_HOME=~/Library/Java/JavaVirtualMachines/azul-17.0.6/Contents/Home 
 ./gradlew clean build
+docker build -t  franzzle/lipsync-flux-api:0.0.3 .
 docker build --no-cache -t  franzzle/lipsync-flux-api:0.0.1 .
 ```
+
+Publishing to Docker Hub
+
+```sh
+docker tag franzzle/lipsync-flux-api:0.0.3 franzzle/lipsync-flux-api:0.0.3
+docker login
+docker push franzzle/lipsync-flux-api:0.0.3
+```
+
 
 ## Docker image for arm64 (Arm based machines like Apple silicon, Chromebooks and Thinkpads)
 
