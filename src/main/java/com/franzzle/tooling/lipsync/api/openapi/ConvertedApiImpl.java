@@ -1,5 +1,6 @@
-package com.franzzle.tooling.lipsync.api;
+package com.franzzle.tooling.lipsync.api.openapi;
 
+import com.franzzle.tooling.lipsync.api.util.FileUtilities;
 import com.franzzle.tooling.lipsync.api.model.Convertables;
 import com.franzzle.tooling.lipsync.api.service.ConvertedService;
 import org.springframework.beans.factory.annotation.Autowired;

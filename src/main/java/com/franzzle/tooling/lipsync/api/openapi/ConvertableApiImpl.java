@@ -1,5 +1,7 @@
-package com.franzzle.tooling.lipsync.api;
+package com.franzzle.tooling.lipsync.api.openapi;
 
+import com.franzzle.tooling.lipsync.api.util.FileUtilities;
+import com.franzzle.tooling.lipsync.api.sink.SinkWrapperRegistry;
 import com.franzzle.tooling.lipsync.api.error.ApiException;
 import com.franzzle.tooling.lipsync.api.error.UuidConversionException;
 import com.franzzle.tooling.lipsync.api.model.Convertable;
