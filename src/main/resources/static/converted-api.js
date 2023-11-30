@@ -35,75 +35,77 @@ async function updateResults() {
         return divLipsync;
     }
 
-function addWavDiv(uuid) {
-    const divWav = document.createElement('div');
-    divWav.className = 'item';
-    divWav.style.display = 'block'; // Set display property to block
-    divWav.style.width = '100%';    // Set width to 100%
+    function addWavDiv(uuid) {
+        const divWav = document.createElement('div');
+        divWav.className = 'item';
+        divWav.style.display = 'block'; // Set display property to block
+        divWav.style.width = '100%';    // Set width to 100%
 
-    const anchorWav = document.createElement('a');
-    anchorWav.href = `/converted/wav/${uuid}.wav`;
-    anchorWav.innerHTML = 'Download WAV file';
+        const anchorWav = document.createElement('a');
+        anchorWav.href = `/converted/wav/${uuid}.wav`;
+        anchorWav.innerHTML = 'Download WAV file';
 
-    // Create audio element for WAV playback
-    const audioElement = document.createElement('audio');
-    audioElement.src = `/converted/wav/${uuid}.wav`;
-    audioElement.id = `audio-${uuid}`;
-    audioElement.style.display = 'none'; // Hide it initially
+        // Create audio element for WAV playback
+        const audioElement = document.createElement('audio');
+        audioElement.src = `/converted/wav/${uuid}.wav`;
+        audioElement.id = `audio-${uuid}`;
+        audioElement.style.display = 'none'; // Hide it initially
 
-    // Create play button to control audio element
-    const playButton = document.createElement('button');
-    const playSvg = `
+        // Create play button to control audio element
+        const playButton = document.createElement('button');
+        const playSvg = `
                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
                            <polygon points="2.5,1.5 2.5,8.5 8.5,5.0" fill="black" />
                        </svg>
                    `;
-    const pauseSvg = `
+        const pauseSvg = `
                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
                           <rect x="2" y="1" width="2" height="7" fill="black"/>
                           <rect x="6" y="1" width="2" height="7" fill="black"/>
                         </svg>
                    `;
 
-    playButton.innerHTML = playSvg;
-    playButton.className = 'play-button';
-    playButton.onclick = function() {
-        const audio = document.getElementById(`audio-${uuid}`);
-        if (audio.paused) {
-            audio.play();
-            playButton.innerHTML = pauseSvg;
-        } else {
-            audio.pause();
-            playButton.innerHTML = playSvg;
-        }
-    };
+        playButton.innerHTML = playSvg;
+        playButton.className = 'play-button';
+        playButton.onclick = function () {
+            const audio = document.getElementById(`audio-${uuid}`);
+            if (audio.paused) {
+                audio.play();
+                playButton.innerHTML = pauseSvg;
+            } else {
+                audio.pause();
+                playButton.innerHTML = playSvg;
+            }
+        };
 
-    // Create a button element to copy UUID to clipboard
-    const copyButton = document.createElement('button');
-    copyButton.innerHTML = 'Copy UUID';
-    copyButton.onclick = function() {
-        // Create a temporary input element to copy text to clipboard
-        const tempInput = document.createElement('input');
-        tempInput.value = uuid;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-    };
+        // Create a button element to copy UUID to clipboard
+        const copyButton = document.createElement('button');
+        copyButton.innerHTML = 'Copy UUID';
+        copyButton.onclick = function () {
+            const tempInput = document.createElement('input');
+            tempInput.value = uuid;
+            document.body.appendChild(tempInput);
+            tempInput.select();
 
-    // Append the elements in the desired order: anchorWav, playButton, audioElement, copyButton
-    divWav.appendChild(anchorWav);
-    divWav.appendChild(playButton);
-    divWav.appendChild(audioElement);
-    divWav.appendChild(copyButton);
+            navigator.clipboard
+                .readText()
+                .then((clipText) => {
+                    document.querySelector(".editor").innerText += clipText;
+                    document.body.removeChild(tempInput);
+                })
+                .catch((err) => {
+                    console.error('Failed to copy text: ', err);
+                });
+        };
 
-    return divWav;
-}
+        // Append the elements in the desired order: anchorWav, playButton, audioElement, copyButton
+        divWav.appendChild(anchorWav);
+        divWav.appendChild(playButton);
+        divWav.appendChild(audioElement);
+        divWav.appendChild(copyButton);
 
-
-
-
-
+        return divWav;
+    }
 
 
     for (const uuid of uuids) {
@@ -116,7 +118,7 @@ function addWavDiv(uuid) {
         const buttonRemove = document.createElement('button');
         buttonRemove.className = 'mdc-button mdc-button--raised mdc-theme primary-bg'
         buttonRemove.innerHTML = 'Remove';
-        buttonRemove.addEventListener("click",()=>deleteConverted(uuid));
+        buttonRemove.addEventListener("click", () => deleteConverted(uuid));
 
         divButtonRemove.appendChild(buttonRemove);
 
