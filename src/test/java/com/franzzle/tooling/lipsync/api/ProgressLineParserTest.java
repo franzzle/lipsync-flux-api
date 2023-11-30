@@ -1,6 +1,7 @@
 package com.franzzle.tooling.lipsync.api;
 
 import com.franzzle.tooling.lipsync.api.service.model.ProgressLine;
+import com.franzzle.tooling.lipsync.api.util.ProgressLineParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

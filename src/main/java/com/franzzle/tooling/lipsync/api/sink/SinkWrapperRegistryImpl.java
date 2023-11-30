@@ -1,4 +1,4 @@
-package com.franzzle.tooling.lipsync.api;
+package com.franzzle.tooling.lipsync.api.sink;
 
 import com.franzzle.tooling.lipsync.api.service.SinkWrapper;
 import org.springframework.stereotype.Component;

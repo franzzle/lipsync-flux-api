@@ -1,4 +1,4 @@
-package com.franzzle.tooling.lipsync.api;
+package com.franzzle.tooling.lipsync.api.util;
 
 import org.springframework.stereotype.Component;
 

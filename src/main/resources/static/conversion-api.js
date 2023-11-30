@@ -17,7 +17,7 @@ async function sendWavFile(wavFile) {
 
 // PUT request to update conversion with uuid
 async function updateConversion(uuid) {
-    const response = await fetch(`${endpoint}/${uuid}`, {
+    await fetch(`${endpoint}/${uuid}`, {
         method: 'PUT',
         body: JSON.stringify({
             status: 'processing'
@@ -36,7 +36,7 @@ async function listenForEvents(uuid) {
         console.log(event.data);
         const progress = event.data;
         const lipsyncConversionProgressBar = document.getElementById('lipsyncConversionProgress');
-        var linearProgress = mdc.linearProgress.MDCLinearProgress.attachTo(lipsyncConversionProgressBar);
+        let linearProgress = mdc.linearProgress.MDCLinearProgress.attachTo(lipsyncConversionProgressBar);
         linearProgress.progress = progress;
         if (progress >= 1) {
             eventSource.close();

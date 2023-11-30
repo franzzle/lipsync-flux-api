@@ -1,17 +1,24 @@
 version: '3.0'
 services:
-
-
   lipsync:
-    image: "franzzle/lipsync-flux-api"
+    image: "franzzle/lipsync-flux-api:0.0.3"
     environment:
       WAV_STORAGE_DIR: /output/lipsyncwavs
       JSON_STORAGE_DIR: /output/lipsyncjsons
       APP_RHUBARB_DIR: /rhubarb/Rhubarb-Lip-Sync-1.13.0-Linux
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,address=*:5180,server=y,suspend=n"
     ports:
       - "9180:9180"
+      - "5180:5180"
     volumes:
       - lipsyncwavs:/output
+
+  whisper_asr:
+    image: "onerahmet/openai-whisper-asr-webservice:latest"
+    environment:
+      ASR_MODEL: base
+    ports:
+      - "9000:9000"
 
 # Names our volumes , TODO add one
 volumes:

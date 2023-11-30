@@ -1,35 +1,42 @@
 body {
-    font-family: Arial;
+    font-family: "Arial Black";
 }
 
+.conversionResults {
+    flex-direction: column;
+    width: 80%;
+}
 
-
-.threeColumn {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 4px;
+.rowMarkup{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     /*border: 1px solid black;*/
-    width: 60%;
+    width: 100%;
 }
 
 .twoColumnLayout {
+    padding-top: 2em;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 8px;
-    /*border: 1px solid black;*/
-    width: 60%;
+    width: 80%;
 }
 
 .oneColumnLayout {
     display: grid;
     grid-template-columns: repeat(1, 2fr);
-    /*grid-gap: 8px;*/
-    /*border: 1px solid black;*/
     width: 60%;
+}
+
+.cell{
+    padding: 10px;
 }
 
 .item {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
 }
@@ -90,7 +97,7 @@ body {
 }
 
 :root {
-    --mdc-theme-primary: #4d5a31; /* adjust this value to change the primary color */
-    --mdc-theme-secondary: #93d502; /* adjust this value to change the secondary color */
+    --mdc-theme-primary: #ff5700; /* adjust this value to change the primary color */
+    --mdc-theme-secondary: #ff9e32; /* adjust this value to change the secondary color */
 }
 

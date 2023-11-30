@@ -1,0 +1,24 @@
+# Start with an ARM64 compatible base image
+FROM arm64v8/ubuntu:latest
+LABEL maintainer="franzzle"
+
+# Install JDK and other dependencies
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jdk wget unzip
+
+# Download and setup Rhubarb Lip Sync
+RUN wget https://github.com/DanielSWolf/rhubarb-lip-sync/releases/download/v1.13.0/Rhubarb-Lip-Sync-1.13.0-Linux.zip -O /tmp/rhubarb.zip && \
+    unzip /tmp/rhubarb.zip -d /rhubarb
+
+# Copy your jar file
+COPY build/libs/*.jar /opt/app.jar
+
+# Setup permissions and directories
+USER root
+RUN mkdir /output && \
+    chmod 775 /output && \
+    mkdir -p /output/lipsyncwavs
+
+# Set environment variables and entry point
+ENV JAVA_OPTS="-Xms256m -Xmx1024m"
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /opt/app.jar" ]

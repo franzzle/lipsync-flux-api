@@ -2,10 +2,7 @@ package com.franzzle.tooling.lipsync.api.service;
 
 import com.franzzle.tooling.lipsync.api.service.model.RhubarbDTO;
 import io.reactivex.Observable;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +21,12 @@ import java.util.List;
 import static java.lang.ClassLoader.getSystemResource;
 
 //TODO Output to temp location and cleanup after that
-//@Disabled
+@Disabled
 @SpringJUnitConfig
 @ContextConfiguration(classes = RhubarbServiceTest.ContextConfiguration.class)
 @TestPropertySource(properties =
         {
-                "app.rhubarb.dir=/Users/franskramer/Development/Tooling/rhubarb-lip-sync-1.10.0-osx"
+                "app.rhubarb.dir=/Users/franzzle/Development/Tooling/rhubarb-lip-sync-1.10.0-osx"
         }
 )
 public class RhubarbServiceTest {
@@ -59,7 +56,7 @@ public class RhubarbServiceTest {
 
     @DisplayName("Convert a spoken text as a WAV file into a lipsinc queue json file and verify that it converted normally")
     @Test
-    public void waveTolipSync() throws Exception {
+    public void waveToLipSync() throws Exception {
         final Observable<String> observableLipsyncProcess = rhubarbService.waveTolipSync(rhubarbDTO);
         final List<String> lastProgressLineOutput = new ArrayList<>();
         observableLipsyncProcess.subscribe(
@@ -83,7 +80,7 @@ public class RhubarbServiceTest {
     }
 
     @Test
-    public void waveTolipSyncWithRepresentingText() throws Exception {
+    public void waveToLipSyncWithRepresentingText() throws Exception {
         rhubarbDTO.setSpokenTextHint("That's one of those typical gravestones");
 
         Observable<String> observableLipsyncProcess = rhubarbService.waveTolipSync(rhubarbDTO);

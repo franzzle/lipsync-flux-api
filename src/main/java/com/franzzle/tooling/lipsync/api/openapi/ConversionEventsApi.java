@@ -1,4 +1,4 @@
-package com.franzzle.tooling.lipsync.api;
+package com.franzzle.tooling.lipsync.api.openapi;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

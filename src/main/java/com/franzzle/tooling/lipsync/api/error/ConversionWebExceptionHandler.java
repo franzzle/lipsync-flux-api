@@ -10,7 +10,6 @@ import reactor.core.publisher.Mono;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class ConversionWebExceptionHandler implements WebExceptionHandler {
 
-
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
         if (ex instanceof UuidConversionException) {

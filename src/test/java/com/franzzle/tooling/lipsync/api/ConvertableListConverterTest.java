@@ -1,7 +1,6 @@
 package com.franzzle.tooling.lipsync.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.franzzle.tooling.lipsync.api.config.ConvertableListConverter;
 import com.franzzle.tooling.lipsync.api.model.Convertable;
 import com.franzzle.tooling.lipsync.api.model.Convertables;
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ConvertableListConverterTest {

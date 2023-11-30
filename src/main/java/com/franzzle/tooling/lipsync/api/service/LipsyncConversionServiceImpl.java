@@ -1,7 +1,7 @@
 package com.franzzle.tooling.lipsync.api.service;
 
-import com.franzzle.tooling.lipsync.api.ProgressLineParser;
-import com.franzzle.tooling.lipsync.api.SinkWrapperRegistry;
+import com.franzzle.tooling.lipsync.api.util.ProgressLineParser;
+import com.franzzle.tooling.lipsync.api.sink.SinkWrapperRegistry;
 import com.franzzle.tooling.lipsync.api.service.model.ProgressLine;
 import com.franzzle.tooling.lipsync.api.service.model.RhubarbDTO;
 import com.franzzle.tooling.lipsync.api.validator.ValidUuid;

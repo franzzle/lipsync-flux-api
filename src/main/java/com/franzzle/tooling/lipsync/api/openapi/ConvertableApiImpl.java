@@ -1,5 +1,7 @@
-package com.franzzle.tooling.lipsync.api;
+package com.franzzle.tooling.lipsync.api.openapi;
 
+import com.franzzle.tooling.lipsync.api.util.FileUtilities;
+import com.franzzle.tooling.lipsync.api.sink.SinkWrapperRegistry;
 import com.franzzle.tooling.lipsync.api.error.ApiException;
 import com.franzzle.tooling.lipsync.api.error.UuidConversionException;
 import com.franzzle.tooling.lipsync.api.model.Convertable;
@@ -37,8 +39,6 @@ public class ConvertableApiImpl implements ConvertableApi {
     @Autowired
     private SinkWrapperRegistry sinkWrapperRegistry;
 
-
-
     @Override
     public Mono<Convertable> postFile(Mono<FilePart> filePartMono) {
         final String uuid = UUID.randomUUID().toString().toUpperCase();
@@ -47,7 +47,7 @@ public class ConvertableApiImpl implements ConvertableApi {
 
         final File dest = new File(wavStorageDir, String.format("%s.wav", uuid));
         return filePartMono
-                .doFirst(() -> System.out.println(String.format("Conversion started")))
+                .doFirst(() -> System.out.println("Conversion started"))
                 .doOnNext(filePart -> System.out.println(filePart.filename()))
                 .doFinally(signalType -> System.out.println(String.format("Conversion ended")))
                 .flatMap(filePart -> filePart.transferTo(dest))
@@ -60,7 +60,10 @@ public class ConvertableApiImpl implements ConvertableApi {
             System.out.println(String.format("Setting default DIR : %s", storageDir));
         }
         if(!wavStorageDir.exists()) {
-            wavStorageDir.mkdirs();
+            boolean mkdirs = wavStorageDir.mkdirs();
+            if(!mkdirs){
+                System.out.println(String.format("Could not create directory %s", wavStorageDir.getAbsolutePath()));
+            }
         }
         return wavStorageDir;
     }
