@@ -23,23 +23,13 @@ async function updateResults() {
     const container = document.getElementById('conversionResults');
     container.innerHTML = '';
 
-    function addLipsyncDiv(uuid) {
-        const divLipsync = document.createElement('div');
-        divLipsync.className = 'item';
+    function addWavDiv(uuid) {
+        const divWav = document.createElement('div');
+        divWav.className = 'item';
 
         const anchorLipSync = document.createElement('a');
         anchorLipSync.href = `/converted/lipsync/${uuid}.json`;
         anchorLipSync.innerHTML = 'Download Lipsync file';
-
-        divLipsync.appendChild(anchorLipSync);
-        return divLipsync;
-    }
-
-    function addWavDiv(uuid) {
-        const divWav = document.createElement('div');
-        divWav.className = 'item';
-        divWav.style.display = 'block'; // Set display property to block
-        divWav.style.width = '100%';    // Set width to 100%
 
         const anchorWav = document.createElement('a');
         anchorWav.href = `/converted/wav/${uuid}.wav`;
@@ -79,12 +69,15 @@ async function updateResults() {
         };
 
         // Create a button element to copy UUID to clipboard
+
+        const divCopyButton = document.createElement('div');
+
         const copyButton = document.createElement('button');
         copyButton.innerHTML = 'Copy UUID';
         copyButton.onclick = function () {
             const tempInput = document.createElement('input');
             tempInput.value = uuid;
-            document.body.appendChild(tempInput);
+            divCopyButton.appendChild(tempInput);
             tempInput.select();
 
             navigator.clipboard
@@ -97,33 +90,27 @@ async function updateResults() {
                     console.error('Failed to copy text: ', err);
                 });
         };
-
-        // Append the elements in the desired order: anchorWav, playButton, audioElement, copyButton
-        divWav.appendChild(anchorWav);
-        divWav.appendChild(playButton);
-        divWav.appendChild(audioElement);
-        divWav.appendChild(copyButton);
-
-        return divWav;
-    }
-
-
-    for (const uuid of uuids) {
-        const divLipsync = addLipsyncDiv(uuid);
-        const divWav = addWavDiv(uuid);
-
-        const divButtonRemove = document.createElement('div');
-        divButtonRemove.className = 'item';
+        divCopyButton.appendChild(copyButton);
 
         const buttonRemove = document.createElement('button');
         buttonRemove.className = 'mdc-button mdc-button--raised mdc-theme primary-bg'
         buttonRemove.innerHTML = 'Remove';
         buttonRemove.addEventListener("click", () => deleteConverted(uuid));
 
-        divButtonRemove.appendChild(buttonRemove);
+        // Append the elements in the desired order: anchorWav, playButton, audioElement, copyButton
+        divWav.appendChild(anchorLipSync);
+        divWav.appendChild(anchorWav);
+        divWav.appendChild(playButton);
+        divWav.appendChild(audioElement);
+        divWav.appendChild(divCopyButton);
+        divWav.appendChild(buttonRemove);
 
-        container.appendChild(divLipsync);
+        return divWav;
+    }
+
+
+    for (const uuid of uuids) {
+        const divWav = addWavDiv(uuid);
         container.appendChild(divWav);
-        container.appendChild(divButtonRemove);
     }
 }

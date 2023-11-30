@@ -2,7 +2,7 @@
 ## Open API page
 
 Visit this for overview of Rest API
-```
+```sh
 http://localhost:9180/swagger-ui/index.html
 ```
 
@@ -25,7 +25,7 @@ Create a docker with this command :
 export JAVA_HOME=~/Library/Java/JavaVirtualMachines/temurin-17.0.7/Contents/Home 
 export JAVA_HOME=~/Library/Java/JavaVirtualMachines/azul-17.0.6/Contents/Home 
 ./gradlew clean build
-docker build --no-cache -t  franzzle/lipsync-flux-api:0.0.1 .
+docker build --no-cache -t  franzzle/lipsync-flux-api:0.1.1 .
 ```
 
 ## Docker image for arm64 (Arm based machines like Apple silicon, Chromebooks and Thinkpads)
@@ -33,7 +33,7 @@ docker build --no-cache -t  franzzle/lipsync-flux-api:0.0.1 .
 ```
 docker buildx create --use
 docker buildx build --platform linux/arm64 --output=type=local,dest=./out -f DockerfileM1 -t lipsync-flux-api-arm:0.0.1 .
-docker buildx build --platform linux/arm64 --load -t lipsync-flux-api-arm:0.0.1 -f DockerfileM1 .
+docker buildx build --platform linux/arm64 --load -t lipsync-flux-api-arm:0.1.1 -f DockerfileM1 .
 ```
 
 At the moment it does not work because these libs are not present :
@@ -42,7 +42,7 @@ qemu-x86_64: Could not open '/lib64/ld-linux-x86-64.so.2': No such file or direc
 
 ## Docker compose run
 
-```
+```sh
 docker-compose up lipsync
 ```
 
@@ -53,7 +53,7 @@ When using the transcribing of audio it is easiest to use the Docker release of 
 Whisper is A locally run tool that you can use to convert your audio into text. 
 Very handy if you want to copy/paste this text through pipeline.
 
-```
+```sh
 docker run -d -p 9000:9000 -e ASR_MODEL=base onerahmet/openai-whisper-asr-webservice:latest
 ```
 

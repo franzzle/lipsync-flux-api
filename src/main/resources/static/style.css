@@ -3,11 +3,18 @@ body {
 }
 
 .threeColumn {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 4px;
-    /*border: 1px solid black;*/
+    flex-direction: column;
+    border: 1px solid black;
     width: 80%;
+}
+
+.rowMarkup{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /*border: 1px solid black;*/
+    width: 100%;
 }
 
 .twoColumnLayout {
@@ -28,6 +35,7 @@ body {
 
 .item {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
 }

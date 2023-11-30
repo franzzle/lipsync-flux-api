@@ -46,13 +46,12 @@ public class ConvertableApiImpl implements ConvertableApi {
         final File wavStorageDir = getWavStorageDir();
 
         final File dest = new File(wavStorageDir, String.format("%s.wav", uuid));
-        Mono<Convertable> convertableMono = filePartMono
+        return filePartMono
                 .doFirst(() -> System.out.println("Conversion started"))
                 .doOnNext(filePart -> System.out.println(filePart.filename()))
                 .doFinally(signalType -> System.out.println(String.format("Conversion ended")))
                 .flatMap(filePart -> filePart.transferTo(dest))
                 .thenReturn(new Convertable(uuid));
-        return convertableMono;
     }
 
     private File getWavStorageDir() {
