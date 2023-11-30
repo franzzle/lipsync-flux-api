@@ -2,9 +2,8 @@ body {
     font-family: "Arial Black";
 }
 
-.threeColumn {
+.conversionResults {
     flex-direction: column;
-    border: 1px solid black;
     width: 80%;
 }
 
@@ -18,19 +17,21 @@ body {
 }
 
 .twoColumnLayout {
+    padding-top: 2em;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 8px;
-    /*border: 1px solid black;*/
     width: 80%;
 }
 
 .oneColumnLayout {
     display: grid;
     grid-template-columns: repeat(1, 2fr);
-    /*grid-gap: 8px;*/
-    /*border: 1px solid black;*/
     width: 60%;
+}
+
+.cell{
+    padding: 10px;
 }
 
 .item {
