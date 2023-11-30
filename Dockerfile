@@ -16,5 +16,5 @@ RUN mkdir /output
 RUN chmod 775 /output
 RUN mkdir -p /output/lipsyncwavs
 
-ENV JAVA_OPTS="-Xms256m -Xmx1024m"
+ENV JAVA_OPTS="-Xms32m -Xmx64m"
 ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /opt/app.jar" ]
