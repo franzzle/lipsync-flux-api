@@ -6,7 +6,9 @@ Visit this for overview of Rest API
 http://localhost:9180/swagger-ui/index.html
 ```
 
-## Open Simple GUI to see the service in action
+![Open API Spec](images/openAPISpec.jpg)
+
+## Simple GUI to test the service
 
 ```sh
 http://localhost:9180/index.html
@@ -15,7 +17,7 @@ http://localhost:9180/index.html
 This will show a very basic but usable frontend to upload WAV files...
 And convert them into Rhubarb's lipsync json as a result. 
 
-![webinterface.png](images%2Fwebinterface.png)
+![The GUI made to demo the service](images/webinterface.jpg)
 
 ## Docker image for x64 (Intel based computers)
 
