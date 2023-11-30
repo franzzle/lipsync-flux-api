@@ -8,7 +8,7 @@ http://localhost:9180/swagger-ui/index.html
 
 ## Open Simple GUI to see the service in action
 
-```
+```sh
 http://localhost:9180/index.html
 ```
 

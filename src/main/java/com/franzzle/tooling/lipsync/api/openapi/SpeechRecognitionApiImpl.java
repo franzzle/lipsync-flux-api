@@ -6,22 +6,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.MultipartBodyBuilder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping("/asr")
 public class SpeechRecognitionApiImpl {
     @Autowired
     private ConvertedService convertedService;
     @Value("${speech.recognition.api.url}")
     private String speechRecognitionApiUrl;
 
-    @PostMapping("/transcribe")
-    public ResponseEntity<String> transcribeAudio(@RequestParam("uuid") String uuid) {
+    public ResponseEntity<String> transcribeAudio(String uuid) {
         try {
             Resource audioResource = convertedService.getResultingWavInput(String.format("%s.wav", uuid));
 
