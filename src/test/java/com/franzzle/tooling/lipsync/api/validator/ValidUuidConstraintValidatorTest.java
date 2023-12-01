@@ -1,6 +1,7 @@
 package com.franzzle.tooling.lipsync.api.validator;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import javax.validation.ConstraintValidatorContext;
@@ -20,12 +21,14 @@ class ValidUuidConstraintValidatorTest {
         constraintValidatorContext = mock(ConstraintValidatorContext.class);
     }
 
+    @DisplayName("Validate if a given uuid meets expectations for a proper UUID by context")
     @Test
     void testIsValid() {
         assertTrue(validUuidConstraintValidator.isValid("3d490a70-94ce-4d15-9494-5248280eebb3", constraintValidatorContext));
         assertFalse(validUuidConstraintValidator.isValid("not-valid-uuid", constraintValidatorContext));
     }
 
+    @DisplayName("Validate if a given uuid meets expectations for a proper UUID")
     @Test
     void testIsUUID() {
         assertTrue(ValidUuidConstraintValidator.isUUID("3d490a70-94ce-4d15-9494-5248280eebb3"));

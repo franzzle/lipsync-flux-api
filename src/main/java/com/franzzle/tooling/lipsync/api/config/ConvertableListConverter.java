@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.util.StdConverter;
 import com.franzzle.tooling.lipsync.api.model.Convertables;
 
 public class ConvertableListConverter extends StdConverter<Convertables, String> {
-
     @Override
     public String convert(Convertables convertables) {
         try {

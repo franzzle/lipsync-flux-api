@@ -31,7 +31,7 @@ public class RhubarbServiceImpl implements RhubarbService {
     private String rhubarbDir;
 
     @Override
-    public Observable<String> waveTolipSync(RhubarbDTO rhubarbDTO) {
+    public Observable<String> wavTolipSync(RhubarbDTO rhubarbDTO) {
         return getObservableForLipsyncProcess(rhubarbDTO.getSourceUuid(),
                 rhubarbDTO.getSourceInputPath(),
                 rhubarbDTO.getDestinationOuputPath(),

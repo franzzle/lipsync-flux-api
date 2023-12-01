@@ -13,6 +13,6 @@ public interface RhubarbService {
      * @return an observable that emits the progress of the lipsync process when subscribed
      * @throws IOException
      */
-    Observable<String> waveTolipSync(RhubarbDTO rhubarbDTO);
+    Observable<String> wavTolipSync(RhubarbDTO rhubarbDTO);
 
 }

@@ -1,9 +1,9 @@
 package com.franzzle.tooling.lipsync.api.service;
 
-import com.franzzle.tooling.lipsync.api.util.ProgressLineParser;
-import com.franzzle.tooling.lipsync.api.sink.SinkWrapperRegistry;
 import com.franzzle.tooling.lipsync.api.service.model.ProgressLine;
 import com.franzzle.tooling.lipsync.api.service.model.RhubarbDTO;
+import com.franzzle.tooling.lipsync.api.sink.SinkWrapperRegistry;
+import com.franzzle.tooling.lipsync.api.util.ProgressLineParser;
 import com.franzzle.tooling.lipsync.api.validator.ValidUuid;
 import io.reactivex.Observable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class LipsyncConversionServiceImpl implements LipsyncConversionService {
         rhubarbDTO.setSourceInputPath(wavInputDir);
         rhubarbDTO.setDestinationOuputPath(jsonOutputDir);
 
-        final Observable<String> rhubarbService = this.rhubarbService.waveTolipSync(rhubarbDTO);
+        final Observable<String> rhubarbService = this.rhubarbService.wavTolipSync(rhubarbDTO);
         rhubarbService.subscribe(
                 progressStatusLine -> {
                     System.out.println(progressStatusLine);
