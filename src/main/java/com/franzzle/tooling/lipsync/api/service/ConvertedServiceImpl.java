@@ -1,8 +1,8 @@
 package com.franzzle.tooling.lipsync.api.service;
 
-import com.franzzle.tooling.lipsync.api.util.FileUtilities;
 import com.franzzle.tooling.lipsync.api.model.Convertable;
 import com.franzzle.tooling.lipsync.api.model.Convertables;
+import com.franzzle.tooling.lipsync.api.util.FileUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -62,7 +62,7 @@ public class ConvertedServiceImpl implements ConvertedService {
     }
 
     @Override
-    public Resource getResultingLipsyncOutput(String uuid) {
+    public Resource getResultingLipSyncOutput(String uuid) {
         try {
             File file = new File(new File(jsonOutputDir), uuid);
             URL fileUrl = file.toURI().toURL();

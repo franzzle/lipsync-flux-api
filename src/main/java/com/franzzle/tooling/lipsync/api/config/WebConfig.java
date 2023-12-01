@@ -22,7 +22,7 @@ public class WebConfig {
     public RouterFunction<ServerResponse> route() {
         return RouterFunctions.route(RequestPredicates.GET("/"), request ->
                 ServerResponse.ok().contentType(MediaType.TEXT_HTML)
-                        .syncBody(resourceLoader.getResource("classpath:/static/index.html")));
+                        .bodyValue(resourceLoader.getResource("classpath:/static/index.html")));
     }
 
 }

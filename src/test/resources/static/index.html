@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Lipsync Conversion App</title>
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script src="conversion-api.js"></script>
+    <script src="converted-api.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<script>
+    window.addEventListener('load', function () {
+        const fileInput = document.getElementById('file-input');
+
+        fileInput.addEventListener('change', async () => {
+            const file = fileInput.files[0];
+            const uuid = await sendWavFile(file);
+            await updateConversion(uuid);
+            listenForEvents(uuid);
+        });
+    });
+</script>
+
+<h1>Lipsync App</h1>`
+
+<form id="fileInputForm">
+    <div class="twoColumnLayout">
+        <div class="item_left mdc-form-field">
+            <div class="mdc-text-field file-input-field">
+                <input type="file" id="file-input" accept=".wav" class="mdc-text-field__input">
+                <div class="mdc-line-ripple"></div>
+            </div>
+            <p class="mdc-text-field-helper-text">Only .wav files are accepted</p>
+        </div>
+        <div class="item_right">
+            <button onclick="document.getElementById('fileInputForm').reset()"
+                    class="my-button mdc-button mdc-button--raised mdc-theme secundary-bg ">Reset
+            </button>
+        </div>
+    </div>
+</form>
+
+<hr class="mdc-list-divider mdc-list-divider--inset">
+
+<div class="twoColumnLayout">
+    <div class="item_right">
+        <label for="lipsyncConversionProgress">Conversion progress : </label>
+    </div>
+    <div class="item_left">
+        <!--        <progress id="lipsyncConversionProgress" value="0"></progress>-->
+        <!-- HTML -->
+        <div id="lipsyncConversionProgress" class="mdc-linear-progress"
+             role="progressbar"
+             aria-valuenow="0"
+             aria-valuemax="100">
+            <div class="mdc-linear-progress__buffering-dots"></div>
+            <div class="mdc-linear-progress__buffer"></div>
+            <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+                <span class="mdc-linear-progress__bar-inner"></span>
+            </div>
+            <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+                <span class="mdc-linear-progress__bar-inner"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+
+
+<div id="conversionResults" class="conversionResults">
+    <!-- DOM will be manipulated to show divs with results -->
+</div>
+
+<div class="twoColumnLayout">
+    <div class="item_left">
+    </div>
+    <div class="item_right">
+        <button onclick="updateResults()" class="mdc-button mdc-button--raised mdc-theme primary-bg">Reload</button>
+    </div>
+</div>
+
+</body>
+</html>

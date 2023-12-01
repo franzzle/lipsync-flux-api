@@ -1,8 +1,8 @@
 package com.franzzle.tooling.lipsync.api.openapi;
 
-import com.franzzle.tooling.lipsync.api.util.FileUtilities;
 import com.franzzle.tooling.lipsync.api.model.Convertables;
 import com.franzzle.tooling.lipsync.api.service.ConvertedService;
+import com.franzzle.tooling.lipsync.api.util.FileUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -44,7 +44,7 @@ public class ConvertedApiImpl implements ConvertedApi{
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         String.format("attachment; filename=%s", uuidFilename))
-                .body(convertedService.getResultingLipsyncOutput(uuidFilename));
+                .body(convertedService.getResultingLipSyncOutput(uuidFilename));
     }
 
     private ResponseEntity<Resource> getResourceWaveFileResponseEntity(String uuidFilename) {

@@ -1,13 +1,12 @@
 package com.franzzle.tooling.lipsync.api.openapi;
 
-import com.franzzle.tooling.lipsync.api.util.FileUtilities;
-import com.franzzle.tooling.lipsync.api.sink.SinkWrapperRegistry;
 import com.franzzle.tooling.lipsync.api.error.ApiException;
 import com.franzzle.tooling.lipsync.api.error.UuidConversionException;
 import com.franzzle.tooling.lipsync.api.model.Convertable;
 import com.franzzle.tooling.lipsync.api.model.Convertables;
 import com.franzzle.tooling.lipsync.api.service.LipsyncConversionService;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.franzzle.tooling.lipsync.api.sink.SinkWrapperRegistry;
+import com.franzzle.tooling.lipsync.api.util.FileUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -21,7 +20,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@Tag(name = "conversion", description = "conversion to lipsync wav")
 public class ConvertableApiImpl implements ConvertableApi {
 
     @Value("${wav.storage.dir:#{systemProperties['java.io.tmpdir']}/wavStorageDir}")

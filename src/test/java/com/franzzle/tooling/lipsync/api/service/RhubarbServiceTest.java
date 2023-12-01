@@ -57,7 +57,7 @@ public class RhubarbServiceTest {
     @DisplayName("Convert a spoken text as a WAV file into a lipsinc queue json file and verify that it converted normally")
     @Test
     public void waveToLipSync() throws Exception {
-        final Observable<String> observableLipsyncProcess = rhubarbService.waveTolipSync(rhubarbDTO);
+        final Observable<String> observableLipsyncProcess = rhubarbService.wavTolipSync(rhubarbDTO);
         final List<String> lastProgressLineOutput = new ArrayList<>();
         observableLipsyncProcess.subscribe(
                 progressStatusLine -> {
@@ -83,7 +83,7 @@ public class RhubarbServiceTest {
     public void waveToLipSyncWithRepresentingText() throws Exception {
         rhubarbDTO.setSpokenTextHint("That's one of those typical gravestones");
 
-        Observable<String> observableLipsyncProcess = rhubarbService.waveTolipSync(rhubarbDTO);
+        Observable<String> observableLipsyncProcess = rhubarbService.wavTolipSync(rhubarbDTO);
         final List<String> lastProgressLineOutput = new ArrayList<>();
         observableLipsyncProcess.subscribe(
                 progressStatusLine -> {
