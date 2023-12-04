@@ -47,7 +47,7 @@ public class ConvertableApiImpl implements ConvertableApi {
         return filePartMono
                 .doFirst(() -> System.out.println("Conversion started"))
                 .doOnNext(filePart -> System.out.println(filePart.filename()))
-                .doFinally(signalType -> System.out.println(String.format("Conversion ended")))
+                .doFinally(signalType -> System.out.println("Conversion ended"))
                 .flatMap(filePart -> filePart.transferTo(dest))
                 .thenReturn(new Convertable(uuid));
     }
@@ -55,12 +55,12 @@ public class ConvertableApiImpl implements ConvertableApi {
     private File getWavStorageDir() {
         final File wavStorageDir = new File(storageDir);
         if(!environment.containsProperty("wav.storage.dir")){
-            System.out.println(String.format("Setting default DIR : %s", storageDir));
+            System.out.printf("Setting default DIR : %s%n", storageDir);
         }
         if(!wavStorageDir.exists()) {
             boolean mkdirs = wavStorageDir.mkdirs();
             if(!mkdirs){
-                System.out.println(String.format("Could not create directory %s", wavStorageDir.getAbsolutePath()));
+                System.out.printf("Could not create directory %s%n", wavStorageDir.getAbsolutePath());
             }
         }
         return wavStorageDir;
@@ -68,7 +68,7 @@ public class ConvertableApiImpl implements ConvertableApi {
 
 
     @Override
-    public void deleteLipsyncArtifacts(String uuid) {
+    public void deleteLipSyncArtifacts(String uuid) {
 //        checkIfFileExists(uuid);
 //        conversionService.convert(uuid);
 
@@ -81,16 +81,10 @@ public class ConvertableApiImpl implements ConvertableApi {
         sinkWrapperRegistry.addSink(uuid);
 
         Mono.fromCallable(() -> lipsyncConversionService.convert(uuid))
-                .publishOn(Schedulers.elastic())
+                .publishOn(Schedulers.boundedElastic())
                 .subscribe();
 
         return new Convertable(uuid);
-    }
-
-    private static void checkIfUuidIsGenuine(String uuid) {
-        if (!isUUID(uuid)) {
-            throw new UuidConversionException(String.format("%s is not a valid UUID and this conversion cannot start", uuid));
-        }
     }
 
     private void checkIfFileExists(String uuid) {
@@ -98,15 +92,6 @@ public class ConvertableApiImpl implements ConvertableApi {
         final File wavFile = new File(storageDir, uuidFileNameFormatted);
         if (!wavFile.exists()) {
             throw new ApiException(String.format("%s is not existent on the filesystem", uuidFileNameFormatted));
-        }
-    }
-
-    public static boolean isUUID(String input) {
-        try {
-            UUID.fromString(input);
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
         }
     }
 
@@ -125,7 +110,7 @@ public class ConvertableApiImpl implements ConvertableApi {
 
         final List<String> filenames =
                 Arrays.stream(Objects.requireNonNull(wavStorageDir
-                                .list((dir, name) -> name.endsWith("wav")))).collect(Collectors.toList());
+                                .list((dir, name) -> name.endsWith("wav")))).toList();
 
         final Convertables convertables = new Convertables();
         convertables.setConvertables(new ArrayList<>());

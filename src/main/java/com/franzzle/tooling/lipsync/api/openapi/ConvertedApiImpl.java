@@ -2,7 +2,6 @@ package com.franzzle.tooling.lipsync.api.openapi;
 
 import com.franzzle.tooling.lipsync.api.model.Convertables;
 import com.franzzle.tooling.lipsync.api.service.ConvertedService;
-import com.franzzle.tooling.lipsync.api.util.FileUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -15,9 +14,6 @@ import reactor.core.publisher.Mono;
 public class ConvertedApiImpl implements ConvertedApi{
     @Autowired
     private ConvertedService convertedService;
-
-    @Autowired
-    private FileUtilities fileUtilities;
 
     @Override
     public Mono<Convertables> listConverted() {
