@@ -1,7 +1,6 @@
 package com.franzzle.tooling.lipsync.api.openapi;
 
 import com.franzzle.tooling.lipsync.api.error.ApiException;
-import com.franzzle.tooling.lipsync.api.error.UuidConversionException;
 import com.franzzle.tooling.lipsync.api.model.Convertable;
 import com.franzzle.tooling.lipsync.api.model.Convertables;
 import com.franzzle.tooling.lipsync.api.service.LipsyncConversionService;
@@ -17,7 +16,6 @@ import reactor.core.scheduler.Schedulers;
 
 import java.io.File;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 public class ConvertableApiImpl implements ConvertableApi {
@@ -52,14 +50,15 @@ public class ConvertableApiImpl implements ConvertableApi {
                 .thenReturn(new Convertable(uuid));
     }
 
+
     private File getWavStorageDir() {
         final File wavStorageDir = new File(storageDir);
-        if(!environment.containsProperty("wav.storage.dir")){
+        if (!environment.containsProperty("wav.storage.dir")) {
             System.out.printf("Setting default DIR : %s%n", storageDir);
         }
-        if(!wavStorageDir.exists()) {
+        if (!wavStorageDir.exists()) {
             boolean mkdirs = wavStorageDir.mkdirs();
-            if(!mkdirs){
+            if (!mkdirs) {
                 System.out.printf("Could not create directory %s%n", wavStorageDir.getAbsolutePath());
             }
         }
@@ -102,7 +101,7 @@ public class ConvertableApiImpl implements ConvertableApi {
 
     private Convertables getConvertables() {
         final File wavStorageDir = new File(storageDir);
-        if(!wavStorageDir.exists()){
+        if (!wavStorageDir.exists()) {
             final Convertables convertables = new Convertables();
             convertables.setConvertables(new ArrayList<>());
             return convertables;
@@ -110,7 +109,7 @@ public class ConvertableApiImpl implements ConvertableApi {
 
         final List<String> filenames =
                 Arrays.stream(Objects.requireNonNull(wavStorageDir
-                                .list((dir, name) -> name.endsWith("wav")))).toList();
+                        .list((dir, name) -> name.endsWith("wav")))).toList();
 
         final Convertables convertables = new Convertables();
         convertables.setConvertables(new ArrayList<>());
