@@ -40,16 +40,21 @@ public class ConvertableApiImpl implements ConvertableApi {
     @Override
     public Mono<Convertable> postFile(Mono<FilePart> filePartMono) {
         final String uuid = UUID.randomUUID().toString().toUpperCase();
-
         final File wavStorageDir = getWavStorageDir();
-
         final File dest = new File(wavStorageDir, String.format("%s.wav", uuid));
+
         return filePartMono
                 .doFirst(() -> System.out.println("Conversion started"))
                 .doOnNext(filePart -> System.out.println(filePart.filename()))
                 .doFinally(signalType -> System.out.println("Conversion ended"))
                 .flatMap(filePart -> filePart.transferTo(dest))
-                .thenReturn(new Convertable(uuid));
+                .thenReturn(new Convertable(uuid))
+                .onErrorResume(throwable -> {
+                    // Log the error here
+                    System.err.println("Error occurred during file transfer: " + throwable.getMessage());
+                    // You can handle the error or return a default value
+                    return Mono.empty(); // Return an empty Mono or handle the error as needed
+                });
     }
 
     private File getWavStorageDir() {

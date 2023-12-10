@@ -3,7 +3,7 @@
 
 Visit this for overview of Rest API
 ```sh
-http://localhost:9180/swagger-ui/index.html
+http://localhost:9280/swagger-ui/index.html
 ```
 
 ![Open API Spec](images/openAPISpec.jpg)
@@ -11,7 +11,7 @@ http://localhost:9180/swagger-ui/index.html
 ## Simple GUI to test the service
 
 ```sh
-http://localhost:9180/index.html
+http://localhost:9280/index.html
 ```
 
 This will show a very basic but usable frontend to upload WAV files...
