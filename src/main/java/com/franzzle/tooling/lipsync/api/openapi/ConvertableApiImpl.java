@@ -48,7 +48,7 @@ public class ConvertableApiImpl implements ConvertableApi {
                 .doOnNext(filePart -> System.out.println(filePart.filename()))
                 .doFinally(signalType -> System.out.println("Conversion ended"))
                 .flatMap(filePart -> filePart.transferTo(dest))
-                .thenReturn(new Convertable(uuid))
+                .thenReturn(Convertable.fromUuid(uuid))
                 .onErrorResume(throwable -> {
                     // Log the error here
                     System.err.println("Error occurred during file transfer: " + throwable.getMessage());
@@ -89,7 +89,7 @@ public class ConvertableApiImpl implements ConvertableApi {
                 .publishOn(Schedulers.boundedElastic())
                 .subscribe();
 
-        return new Convertable(uuid);
+        return Convertable.fromUuid(uuid);
     }
 
     private void checkIfFileExists(String uuid) {
@@ -122,8 +122,7 @@ public class ConvertableApiImpl implements ConvertableApi {
 
         for (String uuidFileName : filenames) {
             final String uuidFromFile = fileUtilities.getFileNameWithoutExtension(uuidFileName);
-            Convertable convertable = new Convertable(uuidFromFile);
-            convertables.getConvertables().add(convertable);
+            convertables.getConvertables().add(Convertable.fromUuid(uuidFromFile));
         }
         return convertables;
     }

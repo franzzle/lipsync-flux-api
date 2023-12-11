@@ -55,7 +55,7 @@ public class ConvertedServiceImpl implements ConvertedService {
 
         for (String uuidFileName : filenames) {
             final String uuidFromFile = fileUtilities.getFileNameWithoutExtension(uuidFileName);
-            Convertable convertable = new Convertable(uuidFromFile);
+            Convertable convertable = Convertable.fromUuid(uuidFromFile);
             convertables.getConvertables().add(convertable);
         }
         return convertables;

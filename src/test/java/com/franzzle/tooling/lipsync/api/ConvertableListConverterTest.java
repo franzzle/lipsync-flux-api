@@ -17,9 +17,9 @@ public class ConvertableListConverterTest {
     @DisplayName("Make list and verify json output")
     @Test
     void testConvert()  {
-        Convertable c1 = new Convertable("1");
-        Convertable c2 = new Convertable("2");
-        Convertable c3 = new Convertable("3");
+        Convertable c1 = Convertable.fromUuid("1");
+        Convertable c2 = Convertable.fromUuid("2");
+        Convertable c3 = Convertable.fromUuid("3");
         List<Convertable> convertableList = Arrays.asList(c1, c2, c3);
         final Convertables convertables = new Convertables();
         convertables.setConvertables(convertableList);
