@@ -1,6 +1,8 @@
 package com.franzzle.tooling.lipsync.api.openapi;
 
 import com.franzzle.tooling.lipsync.api.service.ConvertedService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -11,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class SpeechRecognitionApiImpl {
+    private static final Logger log = LoggerFactory.getLogger(SpeechRecognitionApiImpl.class);
     @Autowired
     private ConvertedService convertedService;
     @Value("${speech.recognition.api.url}")
@@ -33,9 +36,7 @@ public class SpeechRecognitionApiImpl {
                     String.class
             );
 
-            // Implement your logic to process the JSON resource if needed
-            // ...
-            System.out.println(response.getBody());
+             log.info(response.getBody());
 
             return ResponseEntity.ok(response.getBody());
         } catch (Exception e) {
