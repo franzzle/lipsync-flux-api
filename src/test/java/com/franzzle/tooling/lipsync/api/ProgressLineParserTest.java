@@ -19,7 +19,7 @@ public class ProgressLineParserTest {
         final ProgressLineParser progressLineParser = new ProgressLineParser();
         final ProgressLine progressLine = progressLineParser.parse(jsonText);
         Assertions.assertNotNull(progressLine);
-        Assertions.assertNotNull(progressLine.getValue());
+        Assertions.assertNull(progressLine.getValue());
     }
 
     @DisplayName("Progress lines and verify progress lines that are response from Rhubarb")

@@ -45,7 +45,7 @@ qemu-x86_64: Could not open '/lib64/ld-linux-x86-64.so.2': No such file or direc
 ## Docker compose run
 
 ```sh
-docker-compose up lipsync
+docker-compose up lipsync - d
 ```
 
 Dependencies 
@@ -58,6 +58,11 @@ Very handy if you want to copy/paste this text through pipeline.
 ```sh
 docker run -d -p 9000:9000 -e ASR_MODEL=base onerahmet/openai-whisper-asr-webservice:latest
 ```
+Or use the docker-compose service in docker-compose.yml
+```sh
+docker-compose up whisper_asr -d
+```
+
 
 Set the url to the whisper service (supporting Open API) and it will work (with WAV's)
 
