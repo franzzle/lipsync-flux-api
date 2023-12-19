@@ -14,6 +14,14 @@ import javax.validation.Valid;
 @RequestMapping("/conversion")
 @Tag(name = "convertable", description = "File upload and management")
 public interface ConvertableApi {
+    @Operation(summary = "Get a list of convertables", tags = {"convertable"})
+    @GetMapping
+    Mono<Convertables> list();
+
+    @Operation(summary = "Start the conversion", tags = {"convertable"})
+    @PutMapping(path = "/{uuid}")
+    Convertable putConversion(@Valid @ValidUuid @PathVariable String uuid);
+
     @Operation(summary = "Upload a .wav file", tags = {"convertable"})
     @PostMapping
     Mono<Convertable> postFile(@RequestPart("file") Mono<FilePart> file);
@@ -21,12 +29,4 @@ public interface ConvertableApi {
     @Operation(summary = "Remove lipsync artifacts, wav and json", tags = {"convertable"})
     @DeleteMapping(path = "/{uuid}")
     void deleteLipSyncArtifacts(@Valid @ValidUuid @PathVariable String uuid);
-
-    @Operation(summary = "Start the conversion", tags = {"convertable"})
-    @PutMapping(path = "/{uuid}")
-    Convertable putConversion(@Valid @ValidUuid @PathVariable String uuid);
-
-    @Operation(summary = "Get a list of convertables", tags = {"convertable"})
-    @GetMapping
-    Mono<Convertables> list();
 }
