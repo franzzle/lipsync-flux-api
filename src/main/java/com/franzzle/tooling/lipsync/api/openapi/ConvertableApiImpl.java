@@ -1,7 +1,6 @@
 package com.franzzle.tooling.lipsync.api.openapi;
 
 import com.franzzle.tooling.lipsync.api.error.ApiException;
-import com.franzzle.tooling.lipsync.api.error.UuidConversionException;
 import com.franzzle.tooling.lipsync.api.model.Convertable;
 import com.franzzle.tooling.lipsync.api.model.Convertables;
 import com.franzzle.tooling.lipsync.api.service.LipsyncConversionService;
@@ -17,7 +16,6 @@ import reactor.core.scheduler.Schedulers;
 
 import java.io.File;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 public class ConvertableApiImpl implements ConvertableApi {
