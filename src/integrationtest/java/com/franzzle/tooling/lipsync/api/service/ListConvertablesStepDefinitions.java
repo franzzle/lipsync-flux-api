@@ -8,6 +8,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.Assertions;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class ListConvertablesStepDefinitions {
 
         String jsonString = response.asString();
         List<Map<String, String>> convertables = JsonPath.from(jsonString).get("convertables");
-        Assertions.assertTrue(convertables.size() > 0);
+        Assertions.assertEquals(0, convertables.size());
     }
 
     @When("add one convertable")

@@ -33,6 +33,7 @@ dependencies {
 	implementation 'org.slf4j:slf4j-api'
 	implementation 'ch.qos.logback:logback-classic'
 
+
 	implementation platform('io.cucumber:cucumber-bom:7.15.0')
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -40,6 +41,9 @@ dependencies {
 	testImplementation 'io.cucumber:cucumber-java:7.15.0'
 	testImplementation 'io.cucumber:cucumber-junit:7.15.0'
 
+
+	integrationtestImplementation 'org.slf4j:jcl-over-slf4j'
+	integrationtestImplementation 'org.springframework.boot:spring-boot-starter-logging'
 	integrationtestImplementation 'io.cucumber:cucumber-junit-platform-engine:7.15.0'
 	integrationtestImplementation 'io.cucumber:cucumber-java:7.15.0'
 	integrationtestImplementation 'io.cucumber:cucumber-junit:7.15.0'
@@ -63,7 +67,7 @@ tasks.test {
 	useJUnitPlatform()
 }
 
-task integrationtest(type:Test){
+tasks.register('integrationtest', Test) {
 	useJUnitPlatform()
 	systemProperty("cucumber.junit-platform.naming-strategy", "long")
 }
