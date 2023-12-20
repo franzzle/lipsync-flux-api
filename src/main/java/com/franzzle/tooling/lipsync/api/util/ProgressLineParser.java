@@ -11,8 +11,7 @@ public class ProgressLineParser {
     public ProgressLine parse(String jsonLineContent) {
         final ObjectMapper objectMapper = new ObjectMapper();
         try {
-            final ProgressLine progressLine = objectMapper.readValue(jsonLineContent, ProgressLine.class);
-            return progressLine;
+            return objectMapper.readValue(jsonLineContent, ProgressLine.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
